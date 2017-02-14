@@ -1,0 +1,23 @@
+burroplayer:
+  path: /home/derduke/Downloads
+  intro: 0
+
+omxplayer:
+  exe: /usr/bin/omxplayer
+  options: -o both
+  pause: p
+
+PI4J:
+  serial:
+    comPort: /dev/ttyAMA0
+    baud: 4800
+    controllBytes:
+      startRange: 0
+      endRange: 128
+      stop: 128
+      pause: 130
+      status: 129
+
+  pins:
+    happening: GPIO 5
+    movieStatus: GPIO 4
