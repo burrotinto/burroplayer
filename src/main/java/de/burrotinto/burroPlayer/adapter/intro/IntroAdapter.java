@@ -17,7 +17,7 @@ public class IntroAdapter implements InitializingBean, Runnable {
     private final MediaRemote mediaRemote;
     private final MovieInitialisator movieInitialisator;
 
-    @Value("${burroplayer.intro}")
+    @Value("${burroplayer.introprefix}")
     private String introPrefix;
     @Value("${burroplayer.path}")
     private String path;

@@ -1,5 +1,6 @@
 burroplayer:
-  path: /mnt/opt/burrotinto/usb
+#  path: /mnt/opt/burrotinto/usb
+  path: /home/derduke/Downloads
   introprefix: loop
 
 omxplayer:
@@ -21,3 +22,11 @@ PI4J:
   pins:
     happening: GPIO 5
     movieStatus: GPIO 4
+
+logging:
+    file: /var/memento/security.log
+    level:
+        org.springframework: 'OFF'
+        com.glass.memento: 'OFF'
+        de.burrotinto: 'OFF'
+        com.pi4j: 'OFF'
