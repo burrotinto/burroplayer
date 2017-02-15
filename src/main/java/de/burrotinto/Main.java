@@ -17,7 +17,7 @@ public class Main {
 
     public static Optional<Process> startSplashscreen(String spash) {
         try {
-            return Optional.of(new ProcessBuilder("omxplayer", "--loop ",  spash).start());
+            return Optional.of(new ProcessBuilder("bash","-c","omxplayer", "--loop",  spash).start());
         } catch (IOException e) {
             e.printStackTrace();
         }
