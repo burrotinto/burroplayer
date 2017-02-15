@@ -19,7 +19,7 @@ import static java.lang.Thread.sleep;
 public class MovieStatusAdapter implements InitializingBean, Runnable {
     private final MediaRemote mediaRemote;
 
-    @Value("${PI4J:.pin.movieStatus}")
+    @Value("${PI4J.pins.movieStatus}")
     private String pin;
 
     private GpioPinDigitalOutput runningPin;
