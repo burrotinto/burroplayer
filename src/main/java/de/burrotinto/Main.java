@@ -10,7 +10,8 @@ import java.util.Optional;
 public class Main {
 
     public static void main(String[] args) throws Exception {
-        Optional.of(args[0]).ifPresent(s -> Main.startSplashscreen(s));
+        Optional.of(args).ifPresent(strings -> Optional.of(strings[0]).ifPresent(s -> Main.startSplashscreen(s)));
+
         SpringApplication.run(Main.class, new String[0]);
     }
 
