@@ -1,6 +1,6 @@
 burroplayer:
-  path: /home/derduke/Downloads
-  intro: 0
+  path: /mnt/opt/burrotinto/usb
+  introprefix: loop
 
 omxplayer:
   exe: /usr/bin/omxplayer

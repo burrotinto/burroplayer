@@ -1,6 +1,7 @@
 package de.burrotinto.burroPlayer.adapter.intro;
 
 import de.burrotinto.burroPlayer.media.MediaRemote;
+import de.burrotinto.burroPlayer.media.MovieInitialisator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,11 +13,14 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class IntroAdapter implements InitializingBean, Runnable {
+    public static final int INTROKEY = -1;
     private final MediaRemote mediaRemote;
+    private final MovieInitialisator movieInitialisator;
 
     @Value("${burroplayer.intro}")
-    private int intro;
-
+    private String introPrefix;
+    @Value("${burroplayer.path}")
+    private String path;
 
     @Override
     public void run() {
@@ -28,7 +32,7 @@ public class IntroAdapter implements InitializingBean, Runnable {
                 e.printStackTrace();
             }
             if (!mediaRemote.isSomeoneRunning()) {
-                mediaRemote.play(intro);
+                mediaRemote.play(INTROKEY);
             }
         }
 
@@ -36,8 +40,9 @@ public class IntroAdapter implements InitializingBean, Runnable {
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        if (mediaRemote.hasPlayerAt(intro)) {
-            mediaRemote.play(intro);
+        movieInitialisator.setPrefixMovieOnPos(path,mediaRemote,introPrefix,INTROKEY);
+        if (mediaRemote.hasPlayerAt(INTROKEY)) {
+            mediaRemote.play(INTROKEY);
             new Thread(this).start();
         }
     }

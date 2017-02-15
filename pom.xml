@@ -6,7 +6,8 @@
 
     <groupId>de.burrotinto</groupId>
     <artifactId>burroplayer</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>0.1-SNAPSHOT</version>
+<!--http://patorjk.com/software/taag/#p=display&f=Star%20Wars&t=BurroPlayer%0A1.0.RELEASE-->
 
     <parent>
         <groupId>org.springframework.boot</groupId>
