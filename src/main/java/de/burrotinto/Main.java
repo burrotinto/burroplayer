@@ -15,12 +15,11 @@ public class Main {
         SpringApplication.run(Main.class, new String[0]);
     }
 
-    public static Optional<Process> startSplashscreen(String spash) {
+    public static void startSplashscreen(String spash) {
         try {
-            return Optional.of(new ProcessBuilder("bash","-c","omxplayer", "--loop",  spash).start());
+            Runtime.getRuntime().exec( "omxplayer --loop "+  spash );
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return Optional.empty();
     }
 }
