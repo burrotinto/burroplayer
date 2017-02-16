@@ -25,7 +25,7 @@ PI4J:
     movieStatus: GPIO 4
 
 logging:
-    file: /var/burrotinto/burro.log
+#    file: /var/burrotinto/burro.log
     level:
 #        org.springframework: 'OFF'
 #        de.burrotinto: 'OFF'
