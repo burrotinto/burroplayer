@@ -1,3 +1,2 @@
 #!/bin/sh
 ffmpeg -loop 1 -i burroplayer.jpg  -c:v libx264 -t 30 -pix_fmt yuv420p burroplayer.mp4
-sd
