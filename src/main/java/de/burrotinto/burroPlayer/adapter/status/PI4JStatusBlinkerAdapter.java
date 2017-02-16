@@ -25,7 +25,7 @@ public class PI4JStatusBlinkerAdapter implements StatusAdapter, InitializingBean
     private Optional<GpioPinDigitalOutput> active = Optional.empty();
 
     @Override
-    public void somthingHappens() {
+    public void somethingHappens() {
         new Thread() {
             public void run() {
                 active.ifPresent(new Consumer<GpioPinDigitalOutput>() {
