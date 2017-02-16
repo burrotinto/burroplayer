@@ -14,10 +14,13 @@ PI4J:
     baud: 4800
     controllBytes:
       startRange: 0
-      endRange: 128
-      stop: 128
+      endRange: 10
       pause: 130
+      stop: 128
       status: 129
+    sendingBytes:
+      playerrunning: 128
+      playernotRunning: 0
 
   pins:
     happening: GPIO 5
