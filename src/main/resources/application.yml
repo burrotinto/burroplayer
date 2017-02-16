@@ -18,9 +18,8 @@ PI4J:
       stop: 128
       status: 129
     sendingBytes:
-      playerrunning: 128
-      playernotRunning: 0
-
+      playerRunning: 128
+      playerNotRunning: 0
   pins:
     happening: GPIO 5
     movieStatus: GPIO 4
