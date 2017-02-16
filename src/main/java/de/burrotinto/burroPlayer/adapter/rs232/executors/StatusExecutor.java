@@ -1,5 +1,6 @@
-package de.burrotinto.burroPlayer.adapter.rs232;
+package de.burrotinto.burroPlayer.adapter.rs232.executors;
 
+import de.burrotinto.burroPlayer.adapter.rs232.values.SendingBytes;
 import de.burrotinto.burroPlayer.media.MediaRemote;
 import de.burrotinto.comm.IsendCommand;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +14,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class StatusExecutor implements Execute ,InitializingBean {
+public class StatusExecutor implements Executor,InitializingBean {
     private final IsendCommand<Integer> sender;
     private final MediaRemote mediaRemote;
     private final SendingBytes sendingBytes;

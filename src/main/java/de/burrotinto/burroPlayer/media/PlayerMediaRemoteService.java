@@ -1,6 +1,7 @@
 package de.burrotinto.burroPlayer.media;
 
 import de.burrotinto.burroPlayer.media.player.Player;
+import de.burrotinto.burroPlayer.values.BurroPlayerConfig;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
@@ -19,9 +20,7 @@ public class PlayerMediaRemoteService implements MediaRemote, InitializingBean {
     private final Player player;
     private final MovieInitialisator movieInitialisator;
     private final HashMap<Integer, String> map = new HashMap<>();
-
-    @Value("${burroplayer.path}")
-    private String path;
+    private final BurroPlayerConfig burroPlayerConfig;
 
     public void play(int number) {
         if (player != null) {
@@ -60,7 +59,7 @@ public class PlayerMediaRemoteService implements MediaRemote, InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        movieInitialisator.initAllClipsByNumberAndPath(path, this);
+        movieInitialisator.initAllClipsByNumberAndPath(burroPlayerConfig.getPath(), this);
     }
 }
 

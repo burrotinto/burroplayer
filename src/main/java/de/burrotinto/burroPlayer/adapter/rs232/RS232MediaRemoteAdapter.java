@@ -1,5 +1,12 @@
 package de.burrotinto.burroPlayer.adapter.rs232;
 
+import de.burrotinto.burroPlayer.adapter.rs232.executors.Executor;
+import de.burrotinto.burroPlayer.adapter.rs232.executors.PauseExecutor;
+import de.burrotinto.burroPlayer.adapter.rs232.executors.PlayerExector;
+import de.burrotinto.burroPlayer.adapter.rs232.executors.StatusExecutor;
+import de.burrotinto.burroPlayer.adapter.rs232.executors.StopExecutor;
+import de.burrotinto.burroPlayer.adapter.rs232.executors.WrongCodeExecutor;
+import de.burrotinto.burroPlayer.adapter.rs232.values.ControllBytes;
 import de.burrotinto.burroPlayer.adapter.status.StatusAdapter;
 import de.burrotinto.comm.IgetCommand;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +32,7 @@ public class RS232MediaRemoteAdapter implements InitializingBean, Runnable {
     private final StatusAdapter statusAdapter;
     private final ControllBytes controllBytes;
 
-    private final Optional<Execute>[] executes = new Optional[256];
+    private final Optional<Executor>[] executes = new Optional[256];
     private final IgetCommand<Integer> empfaenger;
 
     public void getNextBefehl() throws InterruptedException {

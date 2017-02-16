@@ -1,6 +1,5 @@
-package de.burrotinto.burroPlayer.adapter.rs232;
+package de.burrotinto.burroPlayer.adapter.rs232.executors;
 
-import de.burrotinto.burroPlayer.media.MediaRemote;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -11,12 +10,9 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class PauseExecutor implements Execute {
-    private final MediaRemote mediaRemote;
-
+public class WrongCodeExecutor implements Executor {
     @Override
     public void execute(int command) {
-        log.info("Pause");
-        mediaRemote.pause();
+        log.warn("CANNOT UNDERSTAND: " + command);
     }
 }

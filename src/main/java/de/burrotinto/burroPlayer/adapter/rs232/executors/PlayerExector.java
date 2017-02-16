@@ -1,4 +1,4 @@
-package de.burrotinto.burroPlayer.adapter.rs232;
+package de.burrotinto.burroPlayer.adapter.rs232.executors;
 
 import de.burrotinto.burroPlayer.media.MediaRemote;
 import lombok.RequiredArgsConstructor;
@@ -8,15 +8,15 @@ import org.springframework.stereotype.Service;
 /**
  * Created by derduke on 16.02.17.
  */
-@Slf4j
 @Service
+@Slf4j
 @RequiredArgsConstructor
-public class StopExecutor  implements Execute{
+public class PlayerExector implements Executor {
     private final MediaRemote mediaRemote;
 
     @Override
     public void execute(int command) {
-        log.info("Stoppbefehl");
-        mediaRemote.stopAll();
+        log.info("Videostartbefehl: " + command);
+        mediaRemote.play(command);
     }
 }
