@@ -14,6 +14,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Component;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -32,28 +34,29 @@ public class RS232MediaRemoteAdapter implements InitializingBean, Runnable {
     private final StatusAdapter statusAdapter;
     private final ControllBytes controllBytes;
 
-    private final Optional<Executor>[] executes = new Optional[256];
+    private final Map<Integer,Executor> executes = new HashMap<>();
     private final IgetCommand<Integer> empfaenger;
 
     public void getNextBefehl() throws InterruptedException {
-        int code = empfaenger.holen();
+        Integer code = empfaenger.holen();
         statusAdapter.somethingHappens();
-        executes[code].orElse(wrongCodeExecutor).execute(code);
+        if(executes.containsKey(code)){
+            executes.get(code).execute(code);
+        } else {
+            wrongCodeExecutor.execute(code);
+        }
     }
 
 
     @Override
     public void afterPropertiesSet() throws Exception {
         new Thread(this).start();
-        for (int i = 0; i < executes.length; i++) {
-            executes[i] = Optional.empty();
-        }
         for (int i = controllBytes.getStartRange(); i < controllBytes.getEndRange(); i++) {
-            executes[i] = Optional.of(playerExector);
+            executes.put(i,playerExector);
         }
-        executes[controllBytes.getPause()] = Optional.of(pauseExecutor);
-        executes[controllBytes.getStop()] = Optional.of(stopExecutor);
-        executes[controllBytes.getStatus()] = Optional.of(statusExecutor);
+        executes.put(controllBytes.getPause(),pauseExecutor);
+        executes.put(controllBytes.getStop(),stopExecutor);
+        executes.put(controllBytes.getStatus(),statusExecutor);
     }
 
     @Override
