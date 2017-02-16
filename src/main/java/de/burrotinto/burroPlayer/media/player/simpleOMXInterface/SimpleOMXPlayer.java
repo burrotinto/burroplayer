@@ -4,6 +4,7 @@ import de.burrotinto.burroPlayer.media.analysator.MovieAnalyser;
 import de.burrotinto.burroPlayer.media.player.Player;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -21,13 +22,13 @@ import java.util.List;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class SimpleOMXPlayer implements Player {
+public class SimpleOMXPlayer implements Player, InitializingBean {
     private final MovieAnalyser analyser;
 
     @Value("${omxplayer.exe}")
     private String omxstring;
     @Value("${omxplayer.options}")
-    private String audio;
+    private String options;
     @Value("${omxplayer.pause}")
     private String pause;
 
@@ -36,31 +37,23 @@ public class SimpleOMXPlayer implements Player {
     private Process process = null;
     private BufferedWriter bufferedWriter = null;
     private long time = 0;
+    private String omx;
 
     @Override
     public boolean play(String movie) {
-        if (System.currentTimeMillis() - time < 500) {
+        if (System.currentTimeMillis() - time < 750) {
             return false;
         }
 
         time = System.currentTimeMillis();
         stop();
 
-        StringBuilder omxStringBuilder = new StringBuilder(omxstring).append(" ");
-
-        //Options
-        omxStringBuilder.append(audio).append(" ");
-
-        //Film Hinzufügen
-        omxStringBuilder.append(movie);
-
-
         List<String> args = new LinkedList<>();
         args.add("bash");
         args.add("-c");
-        args.add(omxStringBuilder.toString());
+        args.add(omx + movie);
 
-        log.info("omxString= " + omxStringBuilder.toString());
+        log.info("omxString= " + omx + movie);
 
         if (!movieAnalysatorMap.containsKey(movie)) {
             movieAnalysatorMap.put(movie, analyser.getLenght(movie));
@@ -125,6 +118,11 @@ public class SimpleOMXPlayer implements Player {
 
     public Process getProcess() {
         return process;
+    }
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        omx = omxstring + " " + options +" ";
     }
 
 
