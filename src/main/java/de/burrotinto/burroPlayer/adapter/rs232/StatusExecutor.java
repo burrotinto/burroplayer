@@ -16,10 +16,11 @@ public class StatusExecutor implements Execute {
     private final IsendCommand<Integer> sender;
     private final MediaRemote mediaRemote;
     private final SendingBytes sendingBytes;
+
     @Override
     public void execute(int command) {
         int befehl = mediaRemote.isSomeoneRunning() ? sendingBytes.getPlayerRunning() : sendingBytes.getPlayerNotRunning();
-        log.info("Status: "+befehl);
+        log.info("Status: " +mediaRemote.isSomeoneRunning() + " -> " + befehl);
         sender.geben(befehl);
     }
 }
