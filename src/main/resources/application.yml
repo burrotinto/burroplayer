@@ -1,10 +1,10 @@
 burroplayer:
-  path: /opt/burrotinto/usb
+  path: /home/derduke/Downloads
   loopPrefix: loop
 
 omxplayer:
   exe: /usr/bin/omxplayer
-  options: -o both --no-osd
+  options: -o both
   pause: p
 
 PI4J:
