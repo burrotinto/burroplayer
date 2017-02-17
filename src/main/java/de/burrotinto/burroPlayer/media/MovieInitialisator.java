@@ -22,7 +22,7 @@ import java.util.stream.Stream;
 public class MovieInitialisator {
 
     public void initAllClipsByNumberAndPath(String path, MediaRemote remote) throws IOException {
-    log.info("Filewalk: "+path);
+        log.info("Filewalk: " + path);
         //Rekursiv
         Stream<Path> st = Files.walk(Paths.get(path));
         // Verzeichniss
@@ -31,9 +31,10 @@ public class MovieInitialisator {
 
         while (it.hasNext()) {
             Path p = it.next();
-            log.info("    File: " + p.toFile().getAbsolutePath());
-            if (Files.probeContentType(p).contains("video") || Files.probeContentType(p).contains("audio")) {
-                log.info("       is Movie File: " +  p.toFile().getAbsolutePath());
+            log.info("    File: " + p.toFile().getAbsolutePath() + " " + Files.probeContentType(p));
+//            if (Files.probeContentType(p).contains("video") || Files.probeContentType(p).contains("audio")) {
+            if (true) {
+                log.info("       is Movie File: " + p.toFile().getAbsolutePath());
                 int number = 0;
                 boolean insert = false;
 
