@@ -9,7 +9,9 @@ import java.io.IOException;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Iterator;
+import java.util.stream.Stream;
 
 /**
  * Created by derduke on 03.10.16.
@@ -21,10 +23,10 @@ public class MovieInitialisator {
 
     public void initAllClipsByNumberAndPath(String path, MediaRemote remote) throws IOException {
 
-        // //Rekursiv
-        // Stream<Path> st = Files.walk(Paths.get(path));
+        //Rekursiv
+        Stream<Path> st = Files.walk(Paths.get(path));
         // Verzeichniss
-        DirectoryStream<Path> st = Files.newDirectoryStream(new File(path).toPath());
+//        DirectoryStream<Path> st = Files.newDirectoryStream(new File(path).toPath());
         Iterator<Path> it = st.iterator();
 
         while (it.hasNext()) {
