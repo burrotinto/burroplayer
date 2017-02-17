@@ -4,7 +4,7 @@ burroplayer:
 
 omxplayer:
   exe: /usr/bin/omxplayer
-  options: -o both --no-osd
+  options: -o both
   pause: p
 
 PI4J:
