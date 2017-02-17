@@ -1,5 +1,5 @@
 burroplayer:
-  path: /home/derduke/Downloads
+  path: /media
   loopPrefix: loop
 
 omxplayer:
