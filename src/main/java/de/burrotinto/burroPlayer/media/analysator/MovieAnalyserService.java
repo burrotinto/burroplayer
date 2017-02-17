@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 @Primary
-public class MovieAnalyserService implements MovieAnalyser{
+public class MovieAnalyserService implements MovieAnalyser {
     private final MovieAnalyser movieAnalyser;
 
     public MovieAnalyserService() {

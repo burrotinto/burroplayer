@@ -33,7 +33,7 @@ public class FfprobeMovieAnalyser extends AbstractMovieAnalyser implements Movie
             BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream()));
             duration = (long) (Double.parseDouble(br.readLine()) * 1000);
             br.close();
-        } catch (IOException e){
+        } catch (Exception e){
 
         }
         return duration;
