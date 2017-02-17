@@ -1,5 +1,7 @@
 package de.burrotinto.burroPlayer.media.analysator;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -9,6 +11,7 @@ import java.util.List;
 /**
  * Created by derduke on 11.11.16.
  */
+@Slf4j
 public class FfprobeMovieAnalyser extends AbstractMovieAnalyser implements MovieAnalyser {
 
     public FfprobeMovieAnalyser() throws IOException {
