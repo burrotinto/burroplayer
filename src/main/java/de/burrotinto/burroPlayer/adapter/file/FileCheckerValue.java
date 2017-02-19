@@ -1,4 +1,4 @@
-package de.burrotinto.burroPlayer.adapter.rs232.values;
+package de.burrotinto.burroPlayer.adapter.file;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,15 +8,15 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 /**
- * Created by derduke on 16.02.17.
+ * Created by derduke on 19.02.17.
  */
 @Setter
 @Getter
 @Component
 @NoArgsConstructor
 @AllArgsConstructor
-@ConfigurationProperties(prefix = "burroplayer.adapter.PI4J.serial.sendingBytes")
-public class SendingBytes {
-    private int playerRunning;
-    private int playerNotRunning;
+@ConfigurationProperties(prefix="burroplayer.adapter.filechecker")
+public class FileCheckerValue {
+    private boolean cyclic;
+    private int seconds;
 }

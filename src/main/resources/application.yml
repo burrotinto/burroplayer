@@ -1,28 +1,32 @@
 burroplayer:
   path: /media
   loopPrefix: loop
+  adapter:
+    PI4J:
+      serial:
+        comPort: /dev/ttyAMA0
+        baud: 4800
+        controllBytes:
+          startRange: 0
+          endRange: 10
+          pause: 130
+          stop: 128
+          status: 129
+        sendingBytes:
+          playerRunning: 128
+          playerNotRunning: 0
+      pins:
+        happening: GPIO 5
+        movieStatus: GPIO 4
+    filechecker:
+      cyclic: true
+      seconds: 10
 
 omxplayer:
   exe: /usr/bin/omxplayer
   options: -o both
   pause: p
 
-PI4J:
-  serial:
-    comPort: /dev/ttyAMA0
-    baud: 4800
-    controllBytes:
-      startRange: 0
-      endRange: 10
-      pause: 130
-      stop: 128
-      status: 129
-    sendingBytes:
-      playerRunning: 128
-      playerNotRunning: 0
-  pins:
-    happening: GPIO 5
-    movieStatus: GPIO 4
 
 logging:
 #    file: /var/burrotinto/burro.log

@@ -5,10 +5,10 @@ import de.burrotinto.burroPlayer.values.BurroPlayerConfig;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by derduke on 30.09.16.
@@ -16,11 +16,10 @@ import java.util.HashMap;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class PlayerMediaRemoteService implements MediaRemote, InitializingBean {
+public class PlayerMediaRemoteService implements MediaRemote {
     private final Player player;
-    private final MovieInitialisator movieInitialisator;
+
     private final HashMap<Integer, String> map = new HashMap<>();
-    private final BurroPlayerConfig burroPlayerConfig;
 
     public void play(int number) {
         if (player != null) {
@@ -58,9 +57,15 @@ public class PlayerMediaRemoteService implements MediaRemote, InitializingBean {
     }
 
     @Override
-    public void afterPropertiesSet() throws Exception {
-        movieInitialisator.initAllClipsByNumberAndPath(burroPlayerConfig.getPath(), this);
+    public Map<Integer, String> getMovieMap() {
+        return (Map<Integer, String>) map.clone();
     }
+
+    @Override
+    public void remove(int pos) {
+        map.remove(pos);
+    }
+
 }
 
 
