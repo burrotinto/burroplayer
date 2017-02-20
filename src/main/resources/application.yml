@@ -20,7 +20,7 @@ burroplayer:
         moviestatus: GPIO 4
     filechecker:
       cyclic: true
-      seconds: 10
+      seconds: 60
 
 omxplayer:
   exe: /usr/bin/omxplayer
