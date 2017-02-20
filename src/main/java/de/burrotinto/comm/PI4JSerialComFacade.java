@@ -4,17 +4,13 @@ import com.pi4j.io.serial.Serial;
 import com.pi4j.io.serial.SerialFactory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
 @RequiredArgsConstructor
 public class PI4JSerialComFacade implements ISerial, IgetCommand<Integer>, IsendCommand<Integer> {
-    @Value("${PI4J.serial.comPort}")
-    private String comPort;
-    @Value("${PI4J.serial.baud}")
-    private int baud;
+    private final SerialValue serialValue;
 
     private Serial serial;
 
@@ -54,7 +50,7 @@ public class PI4JSerialComFacade implements ISerial, IgetCommand<Integer>, Isend
     private void lazyInitialization() {
         if (serial == null) {
             serial = SerialFactory.createInstance();
-            serial.open(comPort, baud);
+            serial.open(serialValue.getComPort(), serialValue.getBaud());
         }
     }
 }

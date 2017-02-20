@@ -4,6 +4,7 @@ import com.pi4j.io.gpio.GpioFactory;
 import com.pi4j.io.gpio.GpioPinDigitalOutput;
 import com.pi4j.io.gpio.PinState;
 import com.pi4j.io.gpio.RaspiPin;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,10 +18,9 @@ import java.util.function.Consumer;
  */
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class PI4JStatusBlinkerAdapter implements StatusAdapter, InitializingBean {
-
-    @Value("${PI4J.pins.happening}")
-    private String pin;
+    private final PinValue pin;
 
     private Optional<GpioPinDigitalOutput> active = Optional.empty();
 
@@ -42,7 +42,7 @@ public class PI4JStatusBlinkerAdapter implements StatusAdapter, InitializingBean
     public void afterPropertiesSet() throws Exception {
         try {
             active = Optional.of(GpioFactory.getInstance().provisionDigitalOutputPin(RaspiPin
-                    .getPinByName(pin), "aktiv", PinState.LOW));
+                    .getPinByName(pin.getHappening()), "aktiv", PinState.LOW));
         } catch (UnsatisfiedLinkError e) {
             log.warn("NO Raspi",e);
         }

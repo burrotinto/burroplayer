@@ -17,7 +17,7 @@ burroplayer:
           playerNotRunning: 0
       pins:
         happening: GPIO 5
-        movieStatus: GPIO 4
+        moviestatus: GPIO 4
     filechecker:
       cyclic: true
       seconds: 10
