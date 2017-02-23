@@ -14,6 +14,8 @@ import java.io.OutputStreamWriter;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * Created by derduke on 30.09.16.
@@ -24,6 +26,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SimpleOMXPlayer implements Player, InitializingBean {
     private final MovieAnalyser analyser;
+    private final Lock lock = new ReentrantLock();
 
     @Value("${omxplayer.exe}")
     private String omxstring;
@@ -45,9 +48,9 @@ public class SimpleOMXPlayer implements Player, InitializingBean {
             return false;
         }
 
-        time = System.currentTimeMillis();
         stop();
 
+        lock.lock();
         List<String> args = new LinkedList<>();
         args.add("bash");
         args.add("-c");
@@ -60,20 +63,24 @@ public class SimpleOMXPlayer implements Player, InitializingBean {
         }
 
         try {
+            time = System.currentTimeMillis();
             process = new ProcessBuilder(args).start();
 
             log.info("Movie duration: " + movieAnalysatorMap.get(movie));
             new Thread(new Killer(process, movieAnalysatorMap.get(movie) - 100)).start();
 
         } catch (IOException e) {
+            lock.unlock();
             log.error(e.getMessage());
             return false;
         }
+        lock.unlock();
         return true;
     }
 
     @Override
     public void stop() {
+        lock.lock();
         try {
             log.info("kill start");
             Runtime.getRuntime().exec("killall omxplayer.bin");
@@ -87,10 +94,12 @@ public class SimpleOMXPlayer implements Player, InitializingBean {
         }
         process = null;
         bufferedWriter = null;
+        lock.unlock();
     }
 
     @Override
     public void pause() {
+        lock.lock();
         if (process != null) {
             if (bufferedWriter == null) {
                 log.info("Init BufferedWriter");
@@ -104,6 +113,7 @@ public class SimpleOMXPlayer implements Player, InitializingBean {
                 log.error("Exception while pause", e);
             }
         }
+        lock.unlock();
     }
 
     @Override
@@ -122,7 +132,7 @@ public class SimpleOMXPlayer implements Player, InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        omx = omxstring + " " + options +" ";
+        omx = omxstring + " " + options + " ";
     }
 
 
