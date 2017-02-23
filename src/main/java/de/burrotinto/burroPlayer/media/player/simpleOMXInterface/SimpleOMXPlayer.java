@@ -20,7 +20,6 @@ import java.util.concurrent.locks.ReentrantLock;
 /**
  * Created by derduke on 30.09.16.
  */
-
 @Slf4j
 @Component
 @RequiredArgsConstructor
@@ -126,7 +125,7 @@ public class SimpleOMXPlayer implements Player, InitializingBean {
         return omxstring;
     }
 
-    public Process getProcess() {
+    private Process getProcess() {
         return process;
     }
 
@@ -135,7 +134,7 @@ public class SimpleOMXPlayer implements Player, InitializingBean {
         omx = omxstring + " " + options + " ";
     }
 
-
+    @Slf4j
     class Killer implements Runnable {
 
         final Process process;
@@ -155,7 +154,7 @@ public class SimpleOMXPlayer implements Player, InitializingBean {
                     log.info("Killer killed the process");
                 }
             } catch (InterruptedException e) {
-
+                log.error("KILLER",e);
             }
         }
     }
