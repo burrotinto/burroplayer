@@ -134,7 +134,6 @@ public class SimpleOMXPlayer implements Player, InitializingBean {
         omx = omxstring + " " + options + " ";
     }
 
-    @Slf4j
     class Killer implements Runnable {
 
         final Process process;
