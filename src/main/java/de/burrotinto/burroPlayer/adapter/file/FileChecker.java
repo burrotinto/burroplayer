@@ -27,17 +27,7 @@ public class FileChecker implements Runnable, InitializingBean {
     @Override
     public void run() {
         do {
-            for (Map.Entry<Integer, String> entry : remote.getMovieMap().entrySet()) {
-                File file = new File(entry.getValue());
-                if (!file.exists()) {
-                    remote.remove(entry.getKey());
-                }
-            }
-            try {
-                movieInitialisator.initAllClipsByNumberAndPath(burroPlayerConfig.getPath(), remote);
-            } catch (IOException e) {
-                log.error("MOVIE INIT", e);
-            }
+         check();
             try {
                 Thread.sleep(checkerValue.getSeconds() * 1000);
             } catch (InterruptedException e) {
@@ -49,5 +39,19 @@ public class FileChecker implements Runnable, InitializingBean {
     @Override
     public void afterPropertiesSet() throws Exception {
         new Thread(this).start();
+    }
+
+    public void check(){
+        for (Map.Entry<Integer, String> entry : remote.getMovieMap().entrySet()) {
+            File file = new File(entry.getValue());
+            if (!file.exists()) {
+                remote.remove(entry.getKey());
+            }
+        }
+        try {
+            movieInitialisator.initAllClipsByNumberAndPath(burroPlayerConfig.getPath(), remote);
+        } catch (IOException e) {
+            log.error("MOVIE INIT", e);
+        }
     }
 }

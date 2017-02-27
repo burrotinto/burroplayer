@@ -1,5 +1,6 @@
 package de.burrotinto.burroPlayer.adapter.web;
 
+import de.burrotinto.burroPlayer.adapter.file.FileChecker;
 import de.burrotinto.burroPlayer.media.MediaRemote;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,6 +15,7 @@ import java.util.Map;
 @org.springframework.web.bind.annotation.RestController
 public class RestController {
     private final MediaRemote mediaRemote;
+    private final FileChecker fileChecker;
 
     @RequestMapping("/v1/play/{id}")
     public void play(@PathVariable final Integer id) {
@@ -36,8 +38,12 @@ public class RestController {
     }
 
     @RequestMapping("/v1/all")
-    public Map<Integer,String> map() {
+    public Map<Integer, String> map() {
         return mediaRemote.getMovieMap();
     }
 
+    @RequestMapping("/v1/reload")
+    public void reload() {
+        fileChecker.check();
+    }
 }

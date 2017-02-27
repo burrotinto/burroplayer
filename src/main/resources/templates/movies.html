@@ -22,5 +22,9 @@
         <td th:text="${mov.value}"></td>
     </tr>
 </table>
+<p th:each="mov : ${movies}">
+    <a th:href="@{'/?id=' + ${mov.key}}"  th:text="${mov.value}" ></a>
+</p>
+
 </body>
 </html>

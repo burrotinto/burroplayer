@@ -15,9 +15,10 @@ import org.springframework.stereotype.Component;
 @Component
 @NoArgsConstructor
 @AllArgsConstructor
-@ConfigurationProperties(prefix="burroplayer")
+@ConfigurationProperties(prefix = "burroplayer")
 public class BurroPlayerConfig {
     private String path;
     private String loopPrefix;
     private String player;
+    private Integer minNumber;
 }

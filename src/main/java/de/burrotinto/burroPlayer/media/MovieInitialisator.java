@@ -1,5 +1,6 @@
 package de.burrotinto.burroPlayer.media;
 
+import de.burrotinto.burroPlayer.values.BurroPlayerConfig;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,7 @@ import java.util.stream.Stream;
 @Service
 @RequiredArgsConstructor
 public class MovieInitialisator {
+    private final BurroPlayerConfig config;
 
     public void initAllClipsByNumberAndPath(String path, MediaRemote remote) throws IOException {
         log.info("Filewalk: " + path);
@@ -33,26 +35,35 @@ public class MovieInitialisator {
             Path p = it.next();
             log.info("    File: " + p.toFile().getAbsolutePath() + " " + Files.probeContentType(p));
 //            if (Files.probeContentType(p).contains("video") || Files.probeContentType(p).contains("audio")) {
-            if (true) {
+            if (!p.toFile().isDirectory()) {
                 log.info("       is Movie File: " + p.toFile().getAbsolutePath());
                 int number = 0;
-                boolean insert = false;
+                boolean isNumber = false;
+                if(p.toFile().getName().contains(" ")){
+                    File newFile = new File(p.toFile().getName().replace(" ","_"));
+                    p.toFile().renameTo(newFile);
+                    log.info("    File: {} renamed to: {}",p.toFile().getAbsolutePath(),newFile.getAbsolutePath());
+                    p = newFile.toPath();
+                }
 
                 try {
                     for (char c : p.toFile().getName().toCharArray()) {
                         int x = Integer.parseInt(c + "");
-                        insert = true;
+                        isNumber = true;
                         number = number * 10 + x;
                     }
                 } catch (NumberFormatException e) {
 
                 }
 
-                if (insert) {
-                    log.info(p.toFile().getAbsolutePath() + " on pos " + number + " hinzufügen");
-                    remote.addMovie(number, p.toFile().getAbsolutePath());
+                if (!isNumber) {
+                    number = config.getMinNumber();
+                    while (remote.hasPlayerAt(number)) {
+                        number++;
+                    }
                 }
-
+                log.info("            {} on pos {} hinzufügen", p.toFile().getAbsolutePath(), number);
+                remote.addMovie(number, p.toFile().getAbsolutePath());
             }
         }
         st.close();
