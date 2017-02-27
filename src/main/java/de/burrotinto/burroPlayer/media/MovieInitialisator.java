@@ -1,5 +1,6 @@
 package de.burrotinto.burroPlayer.media;
 
+import de.burrotinto.burroPlayer.media.analysator.MovieAnalyser;
 import de.burrotinto.burroPlayer.values.BurroPlayerConfig;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +23,7 @@ import java.util.stream.Stream;
 @RequiredArgsConstructor
 public class MovieInitialisator {
     private final BurroPlayerConfig config;
+    private final MovieAnalyser analyser;
 
     public void initAllClipsByNumberAndPath(String path, MediaRemote remote) throws IOException {
         log.info("Filewalk: " + path);
@@ -35,7 +37,7 @@ public class MovieInitialisator {
             Path p = it.next();
             log.info("    File: " + p.toFile().getAbsolutePath() + " " + Files.probeContentType(p));
 //            if (Files.probeContentType(p).contains("video") || Files.probeContentType(p).contains("audio")) {
-            if (!p.toFile().isDirectory()) {
+            if (!p.toFile().isDirectory() && analyser.isMovie(p.toFile().getAbsolutePath())) {
                 log.info("       is Movie File: " + p.toFile().getAbsolutePath());
                 int number = 0;
                 boolean isNumber = false;
@@ -56,7 +58,7 @@ public class MovieInitialisator {
 
                 }
 
-                if (!isNumber) {
+                if (!isNumber || remote.hasPlayerAt(number)) {
                     number = config.getMinNumber();
                     while (remote.hasPlayerAt(number)) {
                         number++;

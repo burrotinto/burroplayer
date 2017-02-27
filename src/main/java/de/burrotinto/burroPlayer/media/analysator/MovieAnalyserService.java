@@ -30,11 +30,21 @@ public class MovieAnalyserService implements MovieAnalyser {
     }
 
     @Override
+    public boolean isMovie(String file) {
+        return movieAnalyser.isMovie(file);
+    }
+
+    @Override
     public long getLenght(String movie) {
         return movieAnalyser.getLenght(movie);
     }
 
     private static class DummyAnalyser implements MovieAnalyser {
+        @Override
+        public boolean isMovie(String file) {
+            return true;
+        }
+
         @Override
         public long getLenght(String movie) {
             return Long.MAX_VALUE;

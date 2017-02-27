@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by derduke on 11.11.16.
@@ -25,8 +26,17 @@ public class FfprobeMovieAnalyser extends AbstractMovieAnalyser implements Movie
     }
 
     @Override
+    public boolean isMovie(String file) {
+        return analyze(file).isPresent();
+    }
+
+    @Override
     public long getLenght(String movie) {
-        long duration = Long.MAX_VALUE;
+        return analyze(movie).orElse(Long.MAX_VALUE);
+    }
+
+    private Optional<Long> analyze(String movie) {
+        Optional<Long> duration = Optional.empty();
         try {
             List<String> args = new LinkedList<>();
             args.add("bash");
@@ -34,10 +44,10 @@ public class FfprobeMovieAnalyser extends AbstractMovieAnalyser implements Movie
             args.add("ffprobe -i " + movie + " -show_entries format=duration -v quiet -of csv=\"p=0\"");
             Process process = new ProcessBuilder(args).start();
             BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            duration = (long) (Double.parseDouble(br.readLine()) * 1000);
+            duration = Optional.ofNullable((long) (Double.parseDouble(br.readLine()) * 1000));
             br.close();
-        } catch (Exception e){
-
+        } catch (Exception e) {
+            duration = Optional.empty();
         }
         return duration;
     }

@@ -4,11 +4,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by derduke on 09.11.16.
@@ -26,7 +28,21 @@ class MplayerMovieAnalyser extends AbstractMovieAnalyser implements MovieAnalyse
     }
 
     @Override
+    public boolean isMovie(String file) {
+        return analyze(file).isPresent();
+    }
+
+    @Override
     public long getLenght(String moviePath) {
+        return analyze(moviePath).orElse(Long.MAX_VALUE);
+    }
+
+    @Override
+    public String getApplicationName() {
+        return "mplayer";
+    }
+
+    private Optional<Long> analyze(String moviePath) {
         HashMap<String, String> map = new HashMap<>();
         List<String> args = new LinkedList<>();
         args.add("bash");
@@ -47,20 +63,16 @@ class MplayerMovieAnalyser extends AbstractMovieAnalyser implements MovieAnalyse
             }
             br.close();
         } catch (IOException e) {
-            return Long.MAX_VALUE;
+            return Optional.empty();
         }
         if (map.containsKey(FRAME_COUNT) && map.containsKey(FRAME_RATE)) {
-            return 1000 * (long) (Double.parseDouble(FRAME_COUNT) / Double.parseDouble(FRAME_RATE));
+            return Optional.of(1000 * (long) (Double.parseDouble(FRAME_COUNT) / Double.parseDouble(FRAME_RATE)));
+        } else if (map.containsKey(DURATION)) {
+            return Optional.of(Double.valueOf(Double.parseDouble(map.get(DURATION)) * 1000).longValue());
         } else {
-            return (long) (Double.parseDouble(map.get(DURATION)) * 1000);
+            return Optional.empty();
         }
 
+
     }
-
-    @Override
-    public String getApplicationName() {
-        return "mplayer";
-    }
-
-
 }
