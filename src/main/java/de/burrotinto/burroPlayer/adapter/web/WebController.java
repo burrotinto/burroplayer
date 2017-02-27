@@ -18,15 +18,19 @@ public class WebController {
 
 
     @RequestMapping("/")
-    public String getMovies(@RequestParam(value = "id", required = false) Integer id, Model model) {
-        Optional<Integer> i = Optional.ofNullable(id);
-        i.ifPresent(integer -> mediaRemote.play(integer));
-        log.info("Get Movies list, {} optional", i);
+    public String getMovies(@RequestParam(value = "id", required = false) Integer id, @RequestParam(value = "pause",
+            required = false, defaultValue = "false") Boolean pause, Model model) {
+        Optional<Integer> optionalID = Optional.ofNullable(id);
+        optionalID.ifPresent(integer -> mediaRemote.play(integer));
+
+        log.info("Get Movies list, {} optional", optionalID);
+
+        if (pause)
+            mediaRemote.pause();
 
         model.addAttribute("playing", mediaRemote.isSomeoneRunning());
         model.addAttribute("movies", mediaRemote.getMovieMap());
         return "movies";
     }
-
 
 }

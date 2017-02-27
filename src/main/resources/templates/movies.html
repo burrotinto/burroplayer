@@ -5,10 +5,11 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
 <body>
-<p th:text="'Is playing: ' + ${playing}" />
+<p th:text="'Is playing: ' + ${playing}"/>
+<a href="/?pause=true">pause</a>
 <form action="/">
     <label for="id">Play Number:</label>
-    <input id="id" name="id" />
+    <input id="id" name="id"/>
     <button>play</button>
 </form>
 <table>
