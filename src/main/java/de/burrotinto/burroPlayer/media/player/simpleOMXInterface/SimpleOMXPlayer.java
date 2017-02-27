@@ -61,9 +61,9 @@ public class SimpleOMXPlayer implements Player, InitializingBean {
             process = new ProcessBuilder(args).start();
 
             log.info("Movie duration: " + movieAnalysatorMap.get(movie));
+
             aktualKiller = Optional.ofNullable(new Killer(process, movieAnalysatorMap.get(movie) - 100));
             aktualKiller.ifPresent(killer -> new Thread(killer).start());
-
 
         } catch (IOException e) {
             lock.unlock();
@@ -133,18 +133,21 @@ public class SimpleOMXPlayer implements Player, InitializingBean {
         omx = config.getExe() + " " + config.getOptions() + " ";
     }
 
+
+
+
+
+
+    @RequiredArgsConstructor
     class Killer implements Runnable {
         final Lock lock = new ReentrantLock();
+
         final Process process;
         final long time;
+
         private boolean paused = false;
         private long waiting = 0;
         private long startpausedTime = 0;
-
-        Killer(Process process, long time) {
-            this.process = process;
-            this.time = time;
-        }
 
         @Override
         public void run() {
