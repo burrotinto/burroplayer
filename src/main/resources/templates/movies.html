@@ -6,6 +6,7 @@
 </head>
 <body>
 <p th:text="'Is playing: ' + ${playing}"/>
+<p th:text="'Is paused: ' + ${paused}"/>
 <a href="/?pause=true">pause</a>
 <form action="/">
     <label for="id">Play Number:</label>
@@ -19,12 +20,9 @@
     </tr>
     <tr th:each="mov : ${movies}">
         <td th:text="${mov.key}"></td>
-        <td th:text="${mov.value}"></td>
+        <td> <a th:href="@{'/?id=' + ${mov.key}}"  th:text="${mov.value}" ></a></td>
     </tr>
 </table>
-<p th:each="mov : ${movies}">
-    <a th:href="@{'/?id=' + ${mov.key}}"  th:text="${mov.value}" ></a>
-</p>
 
 </body>
 </html>

@@ -25,11 +25,16 @@ public class WebController {
 
         log.info("Get Movies list, {} optional", optionalID);
 
-        if (pause)
+        if (pause) {
             mediaRemote.pause();
-
-        model.addAttribute("playing", mediaRemote.isSomeoneRunning());
+        }
+        if (mediaRemote.getPlayingIndex().isPresent()) {
+            model.addAttribute("playing", mediaRemote.getPlayingIndex().get());
+        } else {
+            model.addAttribute("playing", "NONE");
+        }
         model.addAttribute("movies", mediaRemote.getMovieMap());
+        model.addAttribute("paused", mediaRemote.isPaused());
         return "movies";
     }
 

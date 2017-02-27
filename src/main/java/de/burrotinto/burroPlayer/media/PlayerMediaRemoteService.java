@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * Created by derduke on 30.09.16.
@@ -21,11 +22,14 @@ public class PlayerMediaRemoteService implements MediaRemote {
 
     private final HashMap<Integer, String> map = new HashMap<>();
 
+    private Integer lastPlayed;
+    private boolean isPaused;
+
     public void play(int number) {
-        if (player != null) {
-
+        if (hasPlayerAt(number)) {
             if (player.play(map.get(number))) {
-
+                lastPlayed = number;
+                isPaused = false;
             }
         }
     }
@@ -33,6 +37,7 @@ public class PlayerMediaRemoteService implements MediaRemote {
     @Override
     public void pause() {
         player.pause();
+        isPaused = !isPaused;
     }
 
     @Override
@@ -66,6 +71,19 @@ public class PlayerMediaRemoteService implements MediaRemote {
         map.remove(pos);
     }
 
+    @Override
+    public Optional<Integer> getPlayingIndex() {
+        if(isSomeoneRunning()){
+            return Optional.of(lastPlayed);
+        } else {
+            return Optional.empty();
+        }
+    }
+
+    @Override
+    public boolean isPaused() {
+        return isSomeoneRunning() && isPaused;
+    }
 }
 
 

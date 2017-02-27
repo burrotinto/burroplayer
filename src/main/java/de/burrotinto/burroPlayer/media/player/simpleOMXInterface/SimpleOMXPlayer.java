@@ -32,46 +32,41 @@ public class SimpleOMXPlayer implements Player, InitializingBean {
 
     private Process process = null;
     private BufferedWriter bufferedWriter = null;
-    private long time = 0;
     private String omx;
     private Optional<Killer> aktualKiller;
 
     @Override
     public boolean play(String movie) {
-        if (System.currentTimeMillis() - time < 750) {
+        if (!lock.tryLock()) {
             return false;
-        }
+        } else {
+            List<String> args = new LinkedList<>();
+            args.add("bash");
+            args.add("-c");
+            args.add(omx + movie);
 
-        stop();
+            log.info("omxString= " + omx + movie);
 
-        lock.lock();
-        List<String> args = new LinkedList<>();
-        args.add("bash");
-        args.add("-c");
-        args.add(omx + movie);
+            if (!movieAnalysatorMap.containsKey(movie)) {
+                movieAnalysatorMap.put(movie, analyser.getLenght(movie));
+            }
 
-        log.info("omxString= " + omx + movie);
+            try {
+                process = new ProcessBuilder(args).start();
 
-        if (!movieAnalysatorMap.containsKey(movie)) {
-            movieAnalysatorMap.put(movie, analyser.getLenght(movie));
-        }
+                log.info("Movie duration: " + movieAnalysatorMap.get(movie));
 
-        try {
-            time = System.currentTimeMillis();
-            process = new ProcessBuilder(args).start();
+                aktualKiller = Optional.ofNullable(new Killer(process, movieAnalysatorMap.get(movie) - 100));
+                aktualKiller.ifPresent(killer -> new Thread(killer).start());
 
-            log.info("Movie duration: " + movieAnalysatorMap.get(movie));
-
-            aktualKiller = Optional.ofNullable(new Killer(process, movieAnalysatorMap.get(movie) - 100));
-            aktualKiller.ifPresent(killer -> new Thread(killer).start());
-
-        } catch (IOException e) {
+            } catch (IOException e) {
+                lock.unlock();
+                log.error(e.getMessage());
+                return false;
+            }
             lock.unlock();
-            log.error(e.getMessage());
-            return false;
+            return true;
         }
-        lock.unlock();
-        return true;
     }
 
     @Override
@@ -134,10 +129,6 @@ public class SimpleOMXPlayer implements Player, InitializingBean {
     }
 
 
-
-
-
-
     @RequiredArgsConstructor
     class Killer implements Runnable {
         final Lock lock = new ReentrantLock();
@@ -147,7 +138,7 @@ public class SimpleOMXPlayer implements Player, InitializingBean {
 
         private boolean paused = false;
         private long waiting = 0;
-        private long startpausedTime = 0;
+        private long startPausedTime = 0;
 
         @Override
         public void run() {
@@ -185,9 +176,9 @@ public class SimpleOMXPlayer implements Player, InitializingBean {
             lock.lock();
             paused = !paused;
             if (paused) {
-                startpausedTime = System.currentTimeMillis();
+                startPausedTime = System.currentTimeMillis();
             } else {
-                waiting += System.currentTimeMillis() - startpausedTime;
+                waiting += System.currentTimeMillis() - startPausedTime;
             }
             lock.unlock();
         }

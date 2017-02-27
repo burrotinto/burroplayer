@@ -1,6 +1,7 @@
 package de.burrotinto.burroPlayer.media;
 
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * Created by derduke on 30.09.16.
@@ -22,4 +23,8 @@ public interface MediaRemote {
     Map<Integer, String> getMovieMap();
 
     void remove(int pos);
+
+    Optional<Integer> getPlayingIndex();
+
+    boolean isPaused();
 }

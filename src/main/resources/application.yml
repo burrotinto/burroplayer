@@ -1,7 +1,7 @@
 burroplayer:
   path: /media
   loopPrefix: loop
-  player: omxplayer    # omxplayer or mplayer
+  player: mplayer    # omxplayer or mplayer
   minNumber: 256
   adapter:
     PI4J:
