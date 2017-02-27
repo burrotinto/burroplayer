@@ -40,7 +40,7 @@ public class MovieInitialisator {
                 int number = 0;
                 boolean isNumber = false;
                 if(p.toFile().getName().contains(" ")){
-                    File newFile = new File(p.toFile().getName().replace(" ","_"));
+                    File newFile = new File(p.toFile().getAbsolutePath().replace(" ","_"));
                     p.toFile().renameTo(newFile);
                     log.info("    File: {} renamed to: {}",p.toFile().getAbsolutePath(),newFile.getAbsolutePath());
                     p = newFile.toPath();
