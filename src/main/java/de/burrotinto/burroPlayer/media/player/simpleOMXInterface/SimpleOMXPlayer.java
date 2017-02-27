@@ -40,6 +40,8 @@ public class SimpleOMXPlayer implements Player, InitializingBean {
         if (!lock.tryLock()) {
             return false;
         } else {
+            stopWithoutLock();
+
             List<String> args = new LinkedList<>();
             args.add("bash");
             args.add("-c");
@@ -69,9 +71,7 @@ public class SimpleOMXPlayer implements Player, InitializingBean {
         }
     }
 
-    @Override
-    public void stop() {
-        lock.lock();
+    private void stopWithoutLock() {
         try {
             log.info("kill start");
             Runtime.getRuntime().exec("killall omxplayer.bin");
@@ -86,6 +86,12 @@ public class SimpleOMXPlayer implements Player, InitializingBean {
         process = null;
         bufferedWriter = null;
         aktualKiller = Optional.empty();
+    }
+
+    @Override
+    public void stop() {
+        lock.lock();
+        stopWithoutLock();
         lock.unlock();
     }
 
