@@ -19,4 +19,5 @@ import org.springframework.stereotype.Component;
 public class BurroPlayerConfig {
     private String path;
     private String loopPrefix;
+    private String player;
 }

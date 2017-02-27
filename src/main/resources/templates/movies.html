@@ -1,0 +1,25 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Start the Movies</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<p th:text="'Is playing: ' + ${playing}" />
+<form action="/">
+    <label for="id">Play Number:</label>
+    <input id="id" name="id" />
+    <button>play</button>
+</form>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+    </tr>
+    <tr th:each="mov : ${movies}">
+        <td th:text="${mov.key}"></td>
+        <td th:text="${mov.value}"></td>
+    </tr>
+</table>
+</body>
+</html>

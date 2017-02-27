@@ -2,13 +2,14 @@ package de.burrotinto.burroPlayer.media.player;
 
 import de.burrotinto.burroPlayer.media.player.mplayerInterface.Mplayer;
 import de.burrotinto.burroPlayer.media.player.simpleOMXInterface.SimpleOMXPlayer;
+import de.burrotinto.burroPlayer.values.BurroPlayerConfig;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Optional;
 
@@ -18,18 +19,15 @@ import java.util.Optional;
 @Slf4j
 @Primary
 @Component
+@RequiredArgsConstructor
 public class PlayerSelector implements Player, InitializingBean {
     private final Mplayer mplayer;
     private final SimpleOMXPlayer omxPlayer;
+    private final BurroPlayerConfig playerConfig;
 
     private Player selected;
 
-    public PlayerSelector(Mplayer mplayer, SimpleOMXPlayer omxPlayer) {
-        this.mplayer = mplayer;
-        this.omxPlayer = omxPlayer;
-    }
-
-    public static boolean appExist(Player player)  {
+    public static boolean appExist(Player player) {
         try {
             Process process = new ProcessBuilder("which", player.applicationExecuteString()).start();
             BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream()));
@@ -37,8 +35,8 @@ public class PlayerSelector implements Player, InitializingBean {
             if (br != null)
                 br.close();
             return !read.orElse("not found").contains("not found");
-        } catch (Exception e){
-            log.error("APPLICATION NOT FOUND",e);
+        } catch (Exception e) {
+            log.error("APPLICATION NOT FOUND", e);
             return false;
         }
     }
@@ -70,7 +68,7 @@ public class PlayerSelector implements Player, InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        selected = appExist(omxPlayer) ? omxPlayer : mplayer;
+        selected = playerConfig.getPlayer().equals("mplayer") ? mplayer : omxPlayer;
         log.info(selected.applicationExecuteString() + " selected");
     }
 }

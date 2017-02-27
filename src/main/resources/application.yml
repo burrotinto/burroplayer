@@ -1,6 +1,7 @@
 burroplayer:
   path: /media
   loopPrefix: loop
+  player: omxplayer    # omxplayer or mplayer
   adapter:
     PI4J:
       serial:
