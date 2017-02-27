@@ -5,7 +5,6 @@ import de.burrotinto.burroPlayer.media.player.Player;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedWriter;
@@ -14,6 +13,7 @@ import java.io.OutputStreamWriter;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -26,13 +26,7 @@ import java.util.concurrent.locks.ReentrantLock;
 public class SimpleOMXPlayer implements Player, InitializingBean {
     private final MovieAnalyser analyser;
     private final Lock lock = new ReentrantLock();
-
-    @Value("${omxplayer.exe}")
-    private String omxstring;
-    @Value("${omxplayer.options}")
-    private String options;
-    @Value("${omxplayer.pause}")
-    private String pause;
+    private final OMXConfig config;
 
     private HashMap<String, Long> movieAnalysatorMap = new HashMap<>();
 
@@ -40,6 +34,7 @@ public class SimpleOMXPlayer implements Player, InitializingBean {
     private BufferedWriter bufferedWriter = null;
     private long time = 0;
     private String omx;
+    private Optional<Killer> aktualKiller;
 
     @Override
     public boolean play(String movie) {
@@ -66,7 +61,9 @@ public class SimpleOMXPlayer implements Player, InitializingBean {
             process = new ProcessBuilder(args).start();
 
             log.info("Movie duration: " + movieAnalysatorMap.get(movie));
-            new Thread(new Killer(process, movieAnalysatorMap.get(movie) - 100)).start();
+            aktualKiller = Optional.ofNullable(new Killer(process, movieAnalysatorMap.get(movie) - 100));
+            aktualKiller.ifPresent(killer -> new Thread(killer).start());
+
 
         } catch (IOException e) {
             lock.unlock();
@@ -93,6 +90,7 @@ public class SimpleOMXPlayer implements Player, InitializingBean {
         }
         process = null;
         bufferedWriter = null;
+        aktualKiller = Optional.empty();
         lock.unlock();
     }
 
@@ -106,7 +104,8 @@ public class SimpleOMXPlayer implements Player, InitializingBean {
             }
             try {
                 log.info("pause");
-                bufferedWriter.write(pause);
+                bufferedWriter.write(config.getPause());
+                aktualKiller.ifPresent(killer -> killer.paused());
                 bufferedWriter.flush();
             } catch (Exception e) {
                 log.error("Exception while pause", e);
@@ -122,7 +121,7 @@ public class SimpleOMXPlayer implements Player, InitializingBean {
 
     @Override
     public String applicationExecuteString() {
-        return omxstring;
+        return config.getExe();
     }
 
     private Process getProcess() {
@@ -131,13 +130,16 @@ public class SimpleOMXPlayer implements Player, InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        omx = omxstring + " " + options + " ";
+        omx = config.getExe() + " " + config.getOptions() + " ";
     }
 
     class Killer implements Runnable {
-
+        final Lock lock = new ReentrantLock();
         final Process process;
         final long time;
+        private boolean paused = false;
+        private long waiting = 0;
+        private long startpausedTime = 0;
 
         Killer(Process process, long time) {
             this.process = process;
@@ -148,13 +150,44 @@ public class SimpleOMXPlayer implements Player, InitializingBean {
         public void run() {
             try {
                 Thread.sleep(time);
+                while (waiting != 0 || paused) {
+                    try {
+
+                        lock.lock();
+
+                        long t = 10;
+                        if (!paused) {
+                            t = waiting;
+                            waiting = 0;
+                        }
+
+                        lock.unlock();
+
+                        Thread.sleep(t);
+
+                    } catch (InterruptedException e) {
+                        log.error("KILLER", e);
+                    }
+                }
                 if (process == getProcess()) {
                     stop();
                     log.info("Killer killed the process");
                 }
             } catch (InterruptedException e) {
-                log.error("KILLER",e);
+                log.error("KILLER", e);
             }
         }
+
+        public void paused() {
+            lock.lock();
+            paused = !paused;
+            if (paused) {
+                startpausedTime = System.currentTimeMillis();
+            } else {
+                waiting += System.currentTimeMillis() - startpausedTime;
+            }
+            lock.unlock();
+        }
+
     }
 }
