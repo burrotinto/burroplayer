@@ -1,7 +1,7 @@
 burroplayer:
   path: /media
   loopPrefix: loop
-  player: omxplayer    # omxplayer or mplayer
+  player: auto    # auto, omxplayer or mplayer
   minNumber: 256
   adapter:
     PI4J:
@@ -15,7 +15,7 @@ burroplayer:
           stop: 128
           status: 129
         sendingBytes:
-          playerRunning: 128
+          playerRunning: 128   # + IndexNumber max 255
           playerNotRunning: 0
       pins:
         happening: GPIO 5
@@ -33,6 +33,6 @@ omxplayer:
 logging:
 #    file: /var/burrotinto/burro.log
     level:
-#        org.springframework: 'OFF'
-#        de.burrotinto: 'OFF'
-#        com.pi4j: 'OFF'
+        org.springframework: 'ERROR'
+        de.burrotinto: 'WARN'
+        com.pi4j: 'OFF'
