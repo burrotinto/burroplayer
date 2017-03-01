@@ -4,7 +4,7 @@ import com.pi4j.io.gpio.GpioFactory;
 import com.pi4j.io.gpio.GpioPinDigitalOutput;
 import com.pi4j.io.gpio.PinState;
 import com.pi4j.io.gpio.RaspiPin;
-import de.burrotinto.burroPlayer.media.MediaRemote;
+import de.burrotinto.burroPlayer.media.remote.IndexMediaRemoteService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
@@ -19,7 +19,7 @@ import static java.lang.Thread.sleep;
 @Component
 @RequiredArgsConstructor
 public class MovieStatusAdapter implements InitializingBean, Runnable {
-    private final MediaRemote mediaRemote;
+    private final IndexMediaRemoteService indexMediaRemoteService;
     private final PinValue pin;
 
     private GpioPinDigitalOutput runningPin;
@@ -38,7 +38,7 @@ public class MovieStatusAdapter implements InitializingBean, Runnable {
     @Override
     public void run() {
         while (true) {
-            runningPin.setState(mediaRemote.isSomeoneRunning());
+            runningPin.setState(indexMediaRemoteService.isSomeoneRunning());
             try {
                 sleep(10);
             } catch (InterruptedException e) {

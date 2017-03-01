@@ -1,6 +1,8 @@
-package de.burrotinto.burroPlayer.media;
+package de.burrotinto.burroPlayer.media.helper;
 
 import de.burrotinto.burroPlayer.media.analysator.MovieAnalyser;
+import de.burrotinto.burroPlayer.media.remote.IndexMediaRemoteService;
+import de.burrotinto.burroPlayer.media.remote.IndexOrganizationMediaRemoteService;
 import de.burrotinto.burroPlayer.values.BurroPlayerConfig;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +27,7 @@ public class MovieInitialisator {
     private final BurroPlayerConfig config;
     private final MovieAnalyser analyser;
 
-    public void initAllClipsByNumberAndPath(String path, MediaRemote remote) throws IOException {
+    public void initAllClipsByNumberAndPath(String path, IndexOrganizationMediaRemoteService remote) throws IOException {
         log.info("Filewalk: " + path);
         //Rekursiv
         Stream<Path> st = Files.walk(Paths.get(path));
@@ -37,14 +39,15 @@ public class MovieInitialisator {
             Path p = it.next();
             log.info("    File: " + p.toFile().getAbsolutePath() + " " + Files.probeContentType(p));
 //            if (Files.probeContentType(p).contains("video") || Files.probeContentType(p).contains("audio")) {
-            if (!p.toFile().isDirectory() && analyser.isMovie(p.toFile().getAbsolutePath())) {
+            if (!p.toFile().isDirectory() && !remote.getIndexForFile(p.toFile().getAbsolutePath()).isPresent() &&
+                    analyser.isMovie(p.toFile().getAbsolutePath())) {
                 log.info("       is Movie File: " + p.toFile().getAbsolutePath());
                 int number = 0;
                 boolean isNumber = false;
-                if(p.toFile().getName().contains(" ")){
-                    File newFile = new File(p.toFile().getAbsolutePath().replace(" ","_"));
+                if (p.toFile().getName().contains(" ")) {
+                    File newFile = new File(p.toFile().getAbsolutePath().replace(" ", "_"));
                     p.toFile().renameTo(newFile);
-                    log.info("    File: {} renamed to: {}",p.toFile().getAbsolutePath(),newFile.getAbsolutePath());
+                    log.info("    File: {} renamed to: {}", p.toFile().getAbsolutePath(), newFile.getAbsolutePath());
                     p = newFile.toPath();
                 }
 
@@ -71,7 +74,7 @@ public class MovieInitialisator {
         st.close();
     }
 
-    public void setPrefixMovieOnPos(String path, MediaRemote remote, String prefix, int pos) throws IOException {
+    public void setPrefixMovieOnPos(String path, IndexMediaRemoteService remote, String prefix, int pos) throws IOException {
         DirectoryStream<Path> st = Files.newDirectoryStream(new File(path).toPath());
         Iterator<Path> it = st.iterator();
 

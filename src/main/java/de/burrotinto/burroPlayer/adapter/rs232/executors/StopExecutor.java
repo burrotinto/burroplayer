@@ -1,6 +1,6 @@
 package de.burrotinto.burroPlayer.adapter.rs232.executors;
 
-import de.burrotinto.burroPlayer.media.MediaRemote;
+import de.burrotinto.burroPlayer.media.remote.IndexMediaRemoteService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -12,11 +12,11 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class StopExecutor  implements Executor {
-    private final MediaRemote mediaRemote;
+    private final IndexMediaRemoteService indexMediaRemoteService;
 
     @Override
     public void execute(int command) {
         log.info("Stoppbefehl");
-        mediaRemote.stopAll();
+        indexMediaRemoteService.stopAll();
     }
 }

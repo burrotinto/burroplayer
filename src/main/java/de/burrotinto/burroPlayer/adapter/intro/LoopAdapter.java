@@ -1,11 +1,10 @@
 package de.burrotinto.burroPlayer.adapter.intro;
 
-import de.burrotinto.burroPlayer.media.MediaRemote;
-import de.burrotinto.burroPlayer.media.MovieInitialisator;
+import de.burrotinto.burroPlayer.media.remote.IndexMediaRemoteService;
+import de.burrotinto.burroPlayer.media.helper.MovieInitialisator;
 import de.burrotinto.burroPlayer.values.BurroPlayerConfig;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 /**
@@ -14,8 +13,8 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class LoopAdapter implements InitializingBean, Runnable {
-    public static final int INTROKEY = -666;
-    private final MediaRemote mediaRemote;
+    public static final int INTROKEY = Integer.MIN_VALUE;
+    private final IndexMediaRemoteService indexMediaRemoteService;
     private final MovieInitialisator movieInitialisator;
     private final BurroPlayerConfig burroPlayerConfig;
 
@@ -28,8 +27,8 @@ public class LoopAdapter implements InitializingBean, Runnable {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            if (!mediaRemote.isSomeoneRunning()) {
-                mediaRemote.play(INTROKEY);
+            if (!indexMediaRemoteService.isSomeoneRunning()) {
+                indexMediaRemoteService.play(INTROKEY);
             }
         }
 
@@ -37,9 +36,9 @@ public class LoopAdapter implements InitializingBean, Runnable {
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        movieInitialisator.setPrefixMovieOnPos(burroPlayerConfig.getPath(),mediaRemote,burroPlayerConfig.getLoopPrefix(),INTROKEY);
-        if (mediaRemote.hasPlayerAt(INTROKEY)) {
-            mediaRemote.play(INTROKEY);
+        movieInitialisator.setPrefixMovieOnPos(burroPlayerConfig.getPath(), indexMediaRemoteService,burroPlayerConfig.getLoopPrefix(),INTROKEY);
+        if (indexMediaRemoteService.hasPlayerAt(INTROKEY)) {
+            indexMediaRemoteService.play(INTROKEY);
             new Thread(this).start();
         }
     }

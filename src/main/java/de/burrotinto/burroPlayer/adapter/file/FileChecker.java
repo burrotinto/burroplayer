@@ -1,7 +1,8 @@
 package de.burrotinto.burroPlayer.adapter.file;
 
-import de.burrotinto.burroPlayer.media.MediaRemote;
-import de.burrotinto.burroPlayer.media.MovieInitialisator;
+import de.burrotinto.burroPlayer.media.remote.IndexMediaRemoteService;
+import de.burrotinto.burroPlayer.media.helper.MovieInitialisator;
+import de.burrotinto.burroPlayer.media.remote.IndexOrganizationMediaRemoteService;
 import de.burrotinto.burroPlayer.values.BurroPlayerConfig;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +21,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class FileChecker implements Runnable, InitializingBean {
     private final FileCheckerValue checkerValue;
-    private final MediaRemote remote;
+    private final IndexOrganizationMediaRemoteService remote;
     private final MovieInitialisator movieInitialisator;
     private final BurroPlayerConfig burroPlayerConfig;
 
