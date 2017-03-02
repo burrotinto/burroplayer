@@ -19,4 +19,5 @@ import org.springframework.stereotype.Component;
 public class SendingBytes {
     private int playerRunning;
     private int playerNotRunning;
+    private int playerPaused;
 }

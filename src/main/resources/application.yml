@@ -15,8 +15,9 @@ burroplayer:
           stop: 128
           status: 129
         sendingBytes:
-          playerRunning: 128   # + IndexNumber max 255
+          playerRunning: 128   # + IndexNumber | max 63
           playerNotRunning: 0
+          playerPaused: 64
       pins:
         happening: GPIO 5
         moviestatus: GPIO 4

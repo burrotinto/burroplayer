@@ -17,7 +17,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class StatusExecutor implements Executor, InitializingBean {
-    private static final int MAX_BYTE_VALUE = 255;
+    private static final int MAX_MOVIE_VALUE = 63;
     private final IsendCommand<Integer> sender;
     private final IndexStatusMediaRemoteService indexStatusMediaRemoteService;
     private final SendingBytes sendingBytes;
@@ -27,8 +27,10 @@ public class StatusExecutor implements Executor, InitializingBean {
         int befehl = sendingBytes.getPlayerNotRunning();
 
         Optional<Integer> index = indexStatusMediaRemoteService.getPlayingIndex();
+
         if (index.isPresent()) {
-            befehl = Math.max(index.get() + MAX_BYTE_VALUE, MAX_BYTE_VALUE);
+            befehl = Math.min(index.get() + sendingBytes.getPlayerRunning(), MAX_MOVIE_VALUE);
+            befehl += indexStatusMediaRemoteService.isPaused() ? sendingBytes.getPlayerPaused() : 0;
         }
 
         log.info("Status: " + indexStatusMediaRemoteService.isSomeoneRunning() + " -> " + befehl);
