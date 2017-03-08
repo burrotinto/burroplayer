@@ -15,7 +15,7 @@ public class RandomAdapter {
     private final IndexMediaRemoteService indexMediaRemoteService;
 
     public Integer playRandom() {
-        Integer random = indexMediaRemoteService.getIndexMap().get(new Random().nextInt(indexMediaRemoteService.getIndexMap().size()));
+        Integer random = indexMediaRemoteService.getIndexList().get(new Random().nextInt(indexMediaRemoteService.getIndexList().size()));
         indexMediaRemoteService.play(random);
         return random;
     }

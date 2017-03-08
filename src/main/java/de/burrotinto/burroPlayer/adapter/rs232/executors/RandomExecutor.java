@@ -2,12 +2,12 @@ package de.burrotinto.burroPlayer.adapter.rs232.executors;
 
 import de.burrotinto.burroPlayer.adapter.random.RandomAdapter;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import org.springframework.stereotype.Service;
 
 /**
  * Created by derduke on 08.03.17.
  */
-@Setter
+@Service
 @RequiredArgsConstructor
 public class RandomExecutor implements Executor {
 

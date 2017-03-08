@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.Map;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -39,8 +39,8 @@ public class RestController {
     }
 
     @RequestMapping("/v1/all")
-    public Map<Integer, String> map() {
-        return indexMediaRemoteService.getMovieMap();
+    public List<Integer> map() {
+        return indexMediaRemoteService.getIndexList();
     }
 
     @RequestMapping("/v1/reload")

@@ -63,7 +63,7 @@ public class PlayerIndexMediaRemoteService implements IndexMediaRemoteService {
     }
 
     @Override
-    public List<Integer> getIndexMap() {
+    public List<Integer> getIndexList() {
         return Collections.unmodifiableList(new ArrayList<>(map.keySet()));
     }
 

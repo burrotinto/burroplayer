@@ -10,7 +10,7 @@ import java.util.Optional;
 public interface IndexOrganizationMediaRemoteService {
     void addMovie(int pos, String path);
 
-    List<Integer> getIndexMap();
+    List<Integer> getIndexList();
 
     Optional<String> getPathOfIndex(Integer index);
 

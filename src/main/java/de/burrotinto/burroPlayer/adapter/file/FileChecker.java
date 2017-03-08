@@ -1,6 +1,5 @@
 package de.burrotinto.burroPlayer.adapter.file;
 
-import de.burrotinto.burroPlayer.media.remote.IndexMediaRemoteService;
 import de.burrotinto.burroPlayer.media.helper.MovieInitialisator;
 import de.burrotinto.burroPlayer.media.remote.IndexOrganizationMediaRemoteService;
 import de.burrotinto.burroPlayer.values.BurroPlayerConfig;
@@ -11,7 +10,6 @@ import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Map;
 
 /**
  * Created by derduke on 19.02.17.
@@ -28,7 +26,7 @@ public class FileChecker implements Runnable, InitializingBean {
     @Override
     public void run() {
         do {
-         check();
+            check();
             try {
                 Thread.sleep(checkerValue.getSeconds() * 1000);
             } catch (InterruptedException e) {
@@ -42,12 +40,15 @@ public class FileChecker implements Runnable, InitializingBean {
         new Thread(this).start();
     }
 
-    public void check(){
-        for (Map.Entry<Integer, String> entry : remote.getMovieMap().entrySet()) {
-            File file = new File(entry.getValue());
-            if (!file.exists()) {
-                remote.remove(entry.getKey());
-            }
+    public void check() {
+        for (Integer index : remote.getIndexList()) {
+            remote.getPathOfIndex(index).ifPresent(s -> {
+                File file = new File(s);
+                if (!file.exists()) {
+                    remote.remove(index);
+                }
+            });
+
         }
         try {
             movieInitialisator.initAllClipsByNumberAndPath(burroPlayerConfig.getPath(), remote);

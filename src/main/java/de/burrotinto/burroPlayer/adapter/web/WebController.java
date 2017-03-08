@@ -9,6 +9,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Slf4j
@@ -39,8 +43,13 @@ public class WebController {
             model.addAttribute("playing", "NONE");
         }
 
-
-        model.addAttribute("movies", indexMediaRemoteService.getMovieMap());
+        Map<Integer, String> map = new LinkedHashMap<>();
+        List<Integer> list = indexMediaRemoteService.getIndexList();
+        Collections.sort(list);
+        for (Integer i : list) {
+            map.put(i, indexMediaRemoteService.getPathOfIndex(i).get());
+        }
+        model.addAttribute("movies", map);
         model.addAttribute("paused", indexMediaRemoteService.isPaused());
         return "movies";
     }
