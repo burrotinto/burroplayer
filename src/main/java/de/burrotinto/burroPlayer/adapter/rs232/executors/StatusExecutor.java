@@ -42,16 +42,15 @@ public class StatusExecutor implements Executor, InitializingBean {
         Optional<Integer> index = indexStatusMediaRemoteService.getPlayingIndex();
 
         if (index.isPresent()) {
-            statusByte = Math.min(index.get() + pow(2, statusByteConfiguration.getPlayerRunningBit()),
-                    MAX_MOVIE_VALUE);
-            statusByte += indexStatusMediaRemoteService.isPaused() ?  pow(2, statusByteConfiguration.getPlayerPausedBit()) : 0;
+            statusByte = pow(2, statusByteConfiguration.getPlayerRunningBit()) + Math.min(index.get(), MAX_MOVIE_VALUE);
+            statusByte += indexStatusMediaRemoteService.isPaused() ? pow(2, statusByteConfiguration.getPlayerPausedBit()) : 0;
         }
         return statusByte;
     }
 
     private Integer pow(int base, int ex) {
         int r = 1;
-        for (int  i = 0; i < ex; i++) {
+        for (int i = 0; i < ex; i++) {
             r = r * base;
         }
         return r;

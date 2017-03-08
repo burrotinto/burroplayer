@@ -43,7 +43,7 @@ public class PI4JSerialComFacade implements ISerial, IgetCommand<Integer>, Isend
     @Override
     public void geben(Integer befehl) {
         lazyInitialization();
-        log.info("sending " + Integer.toBinaryString(befehl));
+        log.info("sending int:{}; byte:{}", befehl, Integer.toBinaryString(befehl));
         serial.write(befehl.byteValue());
     }
 
