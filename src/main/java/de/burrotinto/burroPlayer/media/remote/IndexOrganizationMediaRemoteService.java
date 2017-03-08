@@ -1,5 +1,6 @@
 package de.burrotinto.burroPlayer.media.remote;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -9,7 +10,9 @@ import java.util.Optional;
 public interface IndexOrganizationMediaRemoteService {
     void addMovie(int pos, String path);
 
-    Map<Integer, String> getMovieMap();
+    List<Integer> getIndexMap();
+
+    Optional<String> getPathOfIndex(Integer index);
 
     Optional<Integer> getIndexForFile(String file);
 

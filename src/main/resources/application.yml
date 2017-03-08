@@ -1,23 +1,23 @@
 burroplayer:
-  path: /media
-  loopPrefix: loop
-  player: auto    # auto, omxplayer or mplayer
-  minNumber: 256
+  path: /media                    # path of files, search all subdirs
+  loopPrefix: loop                # file with this prefix are used as loop
+  player: auto                    # auto, omxplayer or mplayer
+  minNumber: 256                  # media files with no integer prefix became an index greater than this
   adapter:
     PI4J:
       serial:
         comPort: /dev/ttyAMA0
         baud: 4800
         controllBytes:
-          startRange: 0
-          endRange: 10
-          pause: 130
-          stop: 128
-          status: 129
-        sendingBytes:
-          playerRunning: 128   # + IndexNumber | max 63
-          playerNotRunning: 0
-          playerPaused: 64
+          startRange: 0           # Beginning of indexes to play ( >= )
+          endRange: 10            # less than this index to play ( < )
+          stop: 128               # stops the playing
+          status: 129             # request a status byte
+          pause: 130              # paused playing
+          random: 131             # play a random movie
+        statusByte:               # the status byte bits |7|6|5|4|3|2|1|0|; bits are not set are used as movie index
+          playerRunningBit: 7
+          playerPausedBit: 6
       pins:
         happening: GPIO 5
         moviestatus: GPIO 4

@@ -23,4 +23,5 @@ public class ControllBytes {
     private int stop;
     private int pause;
     private int status;
+    private int random;
 }

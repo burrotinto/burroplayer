@@ -5,7 +5,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -60,19 +63,25 @@ public class PlayerIndexMediaRemoteService implements IndexMediaRemoteService {
     }
 
     @Override
+    public List<Integer> getIndexMap() {
+        return Collections.unmodifiableList(new ArrayList<>(map.keySet()));
+    }
+
+    @Override
+    public Optional<String> getPathOfIndex(Integer index) {
+        return Optional.ofNullable(map.get(index));
+    }
+
+    @Override
     public boolean hasPlayerAt(Integer introKey) {
         return map.containsKey(introKey);
     }
 
-    @Override
-    public Map<Integer, String> getMovieMap() {
-        return (Map<Integer, String>) map.clone();
-    }
 
     @Override
     public Optional<Integer> getIndexForFile(String file) {
-        for(Map.Entry<Integer,String> entry:map.entrySet()){
-            if(entry.getValue().equals(file)){
+        for (Map.Entry<Integer, String> entry : map.entrySet()) {
+            if (entry.getValue().equals(file)) {
                 return Optional.of(entry.getKey());
             }
         }

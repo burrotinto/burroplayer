@@ -3,6 +3,7 @@ package de.burrotinto.burroPlayer.adapter.rs232;
 import de.burrotinto.burroPlayer.adapter.rs232.executors.Executor;
 import de.burrotinto.burroPlayer.adapter.rs232.executors.PauseExecutor;
 import de.burrotinto.burroPlayer.adapter.rs232.executors.PlayerExector;
+import de.burrotinto.burroPlayer.adapter.rs232.executors.RandomExecutor;
 import de.burrotinto.burroPlayer.adapter.rs232.executors.StatusExecutor;
 import de.burrotinto.burroPlayer.adapter.rs232.executors.StopExecutor;
 import de.burrotinto.burroPlayer.adapter.rs232.executors.WrongCodeExecutor;
@@ -29,6 +30,7 @@ public class RS232MediaRemoteAdapter implements InitializingBean, Runnable {
     private final PlayerExector playerExector;
     private final StatusExecutor statusExecutor;
     private final StopExecutor stopExecutor;
+    private final RandomExecutor randomExecutor;
     private final WrongCodeExecutor wrongCodeExecutor;
 
     private final StatusAdapter statusAdapter;
@@ -54,6 +56,7 @@ public class RS232MediaRemoteAdapter implements InitializingBean, Runnable {
         for (int i = controllBytes.getStartRange(); i < controllBytes.getEndRange(); i++) {
             executes.put(i,playerExector);
         }
+        executes.put(controllBytes.getRandom(),randomExecutor);
         executes.put(controllBytes.getPause(),pauseExecutor);
         executes.put(controllBytes.getStop(),stopExecutor);
         executes.put(controllBytes.getStatus(),statusExecutor);

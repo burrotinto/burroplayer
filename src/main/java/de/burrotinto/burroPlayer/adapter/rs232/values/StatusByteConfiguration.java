@@ -15,9 +15,8 @@ import org.springframework.stereotype.Component;
 @Component
 @NoArgsConstructor
 @AllArgsConstructor
-@ConfigurationProperties(prefix = "burroplayer.adapter.PI4J.serial.sendingBytes")
-public class SendingBytes {
-    private int playerRunning;
-    private int playerNotRunning;
-    private int playerPaused;
+@ConfigurationProperties(prefix = "burroplayer.adapter.PI4J.serial.statusByte")
+public class StatusByteConfiguration {
+    private int playerRunningBit;
+    private int playerPausedBit;
 }
