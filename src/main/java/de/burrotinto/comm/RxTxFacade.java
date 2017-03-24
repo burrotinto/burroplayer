@@ -12,9 +12,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Component;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 @Slf4j
 @Component
@@ -27,8 +30,10 @@ public class RxTxFacade implements InitializingBean, SerialFacade, SerialByteRea
     private OutputStream out;
 
     private void connect() throws Exception {
+        String port = symLink(serialValue.getComPort());
+        
         CommPortIdentifier portIdentifier = CommPortIdentifier
-                .getPortIdentifier(serialValue.getComPort());
+                .getPortIdentifier(port);
         if (portIdentifier.isCurrentlyOwned()) {
             log.error("Error: Port:{} is currently in use", serialValue.getComPort());
         } else {
@@ -50,6 +55,20 @@ public class RxTxFacade implements InitializingBean, SerialFacade, SerialByteRea
                 log.error("Error: Port:{} is not a serial Port", serialValue.getComPort());
             }
         }
+    }
+
+    private String symLink(String path) throws IOException {
+        Path org = new File(path).toPath();
+        int i = 80;
+        File symLink = new File("/dev/ttyS" + i);
+        while (symLink.exists()) {
+            symLink = new File("/dev/ttyS" + (i++));
+        }
+        Files.createSymbolicLink(org, symLink.toPath());
+
+        log.info("{} now map as {}", path, symLink.getAbsolutePath());
+        return symLink.getAbsolutePath();
+
     }
 
     @Override
