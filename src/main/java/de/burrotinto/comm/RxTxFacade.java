@@ -64,7 +64,9 @@ public class RxTxFacade implements InitializingBean, SerialFacade, SerialByteRea
         while (symLink.exists()) {
             symLink = new File("/dev/ttyS" + (i++));
         }
-        Files.createSymbolicLink(org, symLink.toPath());
+//        Files.createSymbolicLink(org, symLink.toPath());
+
+        Runtime.getRuntime().exec("ln -s "+path + " " + symLink.getAbsolutePath());
 
         log.info("{} now map as {}", path, symLink.getAbsolutePath());
         return symLink.getAbsolutePath();
