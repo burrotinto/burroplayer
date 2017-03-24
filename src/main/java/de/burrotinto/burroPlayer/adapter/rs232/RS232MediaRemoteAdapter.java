@@ -9,7 +9,7 @@ import de.burrotinto.burroPlayer.adapter.rs232.executors.StopExecutor;
 import de.burrotinto.burroPlayer.adapter.rs232.executors.WrongCodeExecutor;
 import de.burrotinto.burroPlayer.adapter.rs232.values.ControllBytes;
 import de.burrotinto.burroPlayer.adapter.status.StatusAdapter;
-import de.burrotinto.comm.IgetCommand;
+import de.burrotinto.comm.SerialByteReader;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
@@ -17,7 +17,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 /**
  * Created by derduke on 14.02.17.
@@ -37,10 +36,10 @@ public class RS232MediaRemoteAdapter implements InitializingBean, Runnable {
     private final ControllBytes controllBytes;
 
     private final Map<Integer,Executor> executes = new HashMap<>();
-    private final IgetCommand<Integer> empfaenger;
+    private final SerialByteReader empfaenger;
 
     public void getNextBefehl() throws InterruptedException {
-        Integer code = empfaenger.holen();
+        Integer code = empfaenger.read();
         statusAdapter.somethingHappens();
         if(executes.containsKey(code)){
             executes.get(code).execute(code);

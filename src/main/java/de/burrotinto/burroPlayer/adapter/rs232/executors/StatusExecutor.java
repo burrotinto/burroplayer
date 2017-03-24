@@ -2,7 +2,7 @@ package de.burrotinto.burroPlayer.adapter.rs232.executors;
 
 import de.burrotinto.burroPlayer.adapter.rs232.values.StatusByteConfiguration;
 import de.burrotinto.burroPlayer.media.remote.IndexStatusMediaRemoteService;
-import de.burrotinto.comm.IsendCommand;
+import de.burrotinto.comm.SerialByteWriter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
@@ -19,7 +19,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class StatusExecutor implements Executor, InitializingBean {
     private static final int MAX_MOVIE_VALUE = 63;
-    private final IsendCommand<Integer> sender;
+    private final SerialByteWriter sender;
     private final IndexStatusMediaRemoteService indexStatusMediaRemoteService;
     private final StatusByteConfiguration statusByteConfiguration;
 
@@ -28,7 +28,7 @@ public class StatusExecutor implements Executor, InitializingBean {
 
         int statusByte = getStatusByte();
         log.info("Status: " + indexStatusMediaRemoteService.isSomeoneRunning() + " -> " + statusByte);
-        sender.geben(statusByte);
+        sender.write(statusByte);
     }
 
     @Override

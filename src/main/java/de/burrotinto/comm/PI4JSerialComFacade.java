@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class PI4JSerialComFacade implements ISerial, IgetCommand<Integer>, IsendCommand<Integer> {
+public class PI4JSerialComFacade implements SerialFacade, SerialByteReader, SerialByteWriter {
     private final SerialValue serialValue;
 
     private Serial serial;
@@ -20,7 +20,7 @@ public class PI4JSerialComFacade implements ISerial, IgetCommand<Integer>, Isend
      *
      * @return der Empfangspuffer, der Klasse Pufferspeicher<Integer>
      */
-    public IgetCommand<Integer> getEmpfaenger() {
+    public SerialByteReader getEmpfaenger() {
         return this;
     }
 
@@ -30,21 +30,21 @@ public class PI4JSerialComFacade implements ISerial, IgetCommand<Integer>, Isend
      *
      * @return der Sendepuffer, Klasse Pufferspeicher<Integer>
      */
-    public IsendCommand<Integer> getSender() {
+    public SerialByteWriter getSender() {
         return this;
     }
 
     @Override
-    public Integer holen() throws InterruptedException {
+    public int read() throws InterruptedException {
         lazyInitialization();
         return (int) serial.read();
     }
 
     @Override
-    public void geben(Integer befehl) {
+    public void write(int b) {
         lazyInitialization();
-        log.info("sending int:{}; byte:{}", befehl, Integer.toBinaryString(befehl));
-        serial.write(befehl.byteValue());
+        log.info("sending int:{}; byte:{}", b, Integer.toBinaryString(b));
+        serial.write(new Integer(b).byteValue());
     }
 
     private void lazyInitialization() {

@@ -1,13 +1,13 @@
 package de.burrotinto.comm;
 
-public interface ISerial {
+public interface SerialFacade {
 	/**
 	 * Gibt den Empfangspuffer zurück, dieser liefert Int 0 <= x <= 255 und -1
 	 * wenn
 	 * 
 	 * @return der Empfangspuffer, der Klasse Pufferspeicher<Integer>
 	 */
-	public IgetCommand<Integer> getEmpfaenger();
+	public SerialByteReader getEmpfaenger();
 
 	/**
 	 * Gibt den Sendepuffer zurück. Dieser sollte nur mit 0<=x<=255 gefuettert
@@ -15,5 +15,5 @@ public interface ISerial {
 	 * 
 	 * @return der Sendepuffer, Klasse Pufferspeicher<Integer>
 	 */
-	public IsendCommand<Integer> getSender();
+	public SerialByteWriter getSender();
 }
