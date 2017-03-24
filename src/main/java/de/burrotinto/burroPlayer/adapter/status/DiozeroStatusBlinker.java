@@ -24,6 +24,6 @@ public class DiozeroStatusBlinker implements StatusAdapter, InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        outputDevice = new DigitalOutputDevice(pin.getHappening(), true, false);
+        outputDevice = new DigitalOutputDevice(pin.getHappening());
     }
 }
