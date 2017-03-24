@@ -31,7 +31,7 @@ public class RxTxFacade implements InitializingBean, SerialFacade, SerialByteRea
 
     private void connect() throws Exception {
         String port = symLink(serialValue.getComPort());
-        
+
         CommPortIdentifier portIdentifier = CommPortIdentifier
                 .getPortIdentifier(port);
         if (portIdentifier.isCurrentlyOwned()) {
