@@ -43,6 +43,12 @@
             <optional>true</optional>
         </dependency>
         <dependency>
+            <groupId>com.diozero</groupId>
+            <artifactId>diozero-core</artifactId>
+            <version>0.9</version>
+        </dependency>
+
+        <dependency>
             <groupId>com.pi4j</groupId>
             <artifactId>pi4j-core</artifactId>
             <version>1.0</version>

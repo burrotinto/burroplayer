@@ -17,6 +17,6 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 @ConfigurationProperties(prefix = "burroplayer.adapter.PI4J.pins")
 public class PinValue {
-    private String happening;
-    private String moviestatus;
+    private int happening;
+    private int moviestatus;
 }

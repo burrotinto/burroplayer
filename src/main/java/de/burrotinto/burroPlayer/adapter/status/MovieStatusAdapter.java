@@ -27,7 +27,9 @@ public class MovieStatusAdapter implements InitializingBean, Runnable {
     @Override
     public void afterPropertiesSet() throws Exception {
         try {
-            runningPin = GpioFactory.getInstance().provisionDigitalOutputPin(RaspiPin.getPinByName(pin.getMoviestatus()),
+            runningPin = GpioFactory.getInstance().provisionDigitalOutputPin(RaspiPin.getPinByName
+                            (PI4JStatusBlinkerAdapter.PI4J_PIN_PREFIX + pin
+                                    .getMoviestatus()),
                     "LAEUFT", PinState.LOW);
             new Thread(this).start();
         } catch (UnsatisfiedLinkError e) {
