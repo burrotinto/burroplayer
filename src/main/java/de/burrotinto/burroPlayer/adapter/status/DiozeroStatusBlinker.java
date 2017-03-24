@@ -1,7 +1,6 @@
 package de.burrotinto.burroPlayer.adapter.status;
 
 import com.diozero.LED;
-import com.diozero.api.DigitalOutputDevice;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.annotation.Primary;
