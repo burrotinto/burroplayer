@@ -1,5 +1,6 @@
 package de.burrotinto.burroPlayer.adapter.status;
 
+import com.diozero.LED;
 import com.diozero.api.DigitalOutputDevice;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.InitializingBean;
@@ -15,7 +16,7 @@ import org.springframework.stereotype.Service;
 public class DiozeroStatusBlinker implements StatusAdapter, InitializingBean {
     private final PinValue pin;
 
-    private DigitalOutputDevice outputDevice;
+    private LED outputDevice;
 
     @Override
     public void somethingHappens() {
@@ -24,6 +25,6 @@ public class DiozeroStatusBlinker implements StatusAdapter, InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        outputDevice = new DigitalOutputDevice(pin.getHappening());
+        outputDevice = new LED(pin.getHappening());
     }
 }
