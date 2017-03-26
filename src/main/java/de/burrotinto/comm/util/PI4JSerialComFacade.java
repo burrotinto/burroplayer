@@ -1,7 +1,9 @@
-package de.burrotinto.comm;
+package de.burrotinto.comm.util;
 
 import com.pi4j.io.serial.Serial;
 import com.pi4j.io.serial.SerialFactory;
+import de.burrotinto.comm.SerialValue;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class PI4JSerialComFacade implements SerialFacade, SerialByteReader, SerialByteWriter {
+    @Getter
     private final SerialValue serialValue;
 
     private Serial serial;

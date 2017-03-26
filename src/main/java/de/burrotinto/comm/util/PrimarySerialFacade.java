@@ -1,4 +1,4 @@
-package de.burrotinto.comm;
+package de.burrotinto.comm.util;
 
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Delegate;
