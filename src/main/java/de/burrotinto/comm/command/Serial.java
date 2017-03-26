@@ -1,12 +1,12 @@
 package de.burrotinto.comm.command;
 
 import lombok.NoArgsConstructor;
-import ognl.IntHashMap;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.commandhandling.model.AggregateIdentifier;
 import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.spring.stereotype.Aggregate;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import static org.axonframework.commandhandling.model.AggregateLifecycle.apply;
@@ -25,7 +25,7 @@ public class Serial {
 
     @CommandHandler
     public Serial(SerialApi.CreateSerialCommand command) {
-        apply(new SerialApi.RS232CreatedEvent(command.getSerialId(), command.getMovies(), command.getStop(), command
+        apply(new SerialApi.SerialCreatedEvent(command.getSerialId(), command.getMovies(), command.getStop(), command
                 .getStatus(), command.getPause(), command.getRandom()));
     }
 
@@ -35,15 +35,15 @@ public class Serial {
     }
 
     @CommandHandler
-    public void handle(SerialApi.SendStatusCommand command){
-        apply(new SerialApi.StatusSendEvent(command.getSerialId(),command.isRunning(),command.isPaused(),command.getMovieNumber()));
+    public void handle(SerialApi.SendStatusCommand command) {
+        apply(new SerialApi.StatusSendEvent(command.getSerialId(), command.isRunning(), command.isPaused(), command.getMovieNumber()));
     }
 
 
     @EventSourcingHandler
-    public void on(SerialApi.RS232CreatedEvent event) {
+    public void on(SerialApi.SerialCreatedEvent event) {
         serialId = event.getSerialId();
-        commands = new IntHashMap();
+        commands = new HashMap();
         for (int i = 0; i < 255; i++) {
             commands.put(i, new SerialApi.UnknownRequestEvent(serialId, i));
         }

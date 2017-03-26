@@ -11,12 +11,14 @@ import org.axonframework.eventsourcing.eventstore.EmbeddedEventStore;
 import org.axonframework.eventsourcing.eventstore.EventStorageEngine;
 import org.axonframework.eventsourcing.eventstore.EventStore;
 import org.axonframework.eventsourcing.eventstore.inmemory.InMemoryEventStorageEngine;
+import org.axonframework.spring.config.EnableAxon;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
  * Created by derduke on 02.03.17.
  */
+@EnableAxon
 @Configuration
 @RequiredArgsConstructor
 public class AxonConfig {
@@ -42,9 +44,11 @@ public class AxonConfig {
     }
 
     @Bean
-    public Repository<Serial> drumRepository() {
+    public Repository<Serial> serialRepository() {
+
         return new EventSourcingRepository<>(Serial.class, eventStore());
     }
+
 
 }
 

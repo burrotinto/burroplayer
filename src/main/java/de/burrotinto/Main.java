@@ -1,6 +1,7 @@
 package de.burrotinto;
 
 import de.burrotinto.comm.SerialService;
+import org.axonframework.commandhandling.CommandBus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -14,6 +15,9 @@ public class Main implements CommandLineRunner{
 
     @Autowired
     SerialService serialService;
+
+    @Autowired
+    CommandBus commandBus;
 
     public static void main(String[] args) throws Exception {
         if (args != null && args.length > 0)

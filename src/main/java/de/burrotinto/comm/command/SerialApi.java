@@ -38,7 +38,7 @@ public class SerialApi {
         Optional<String> movieName;
     }
     @Value
-    public static class RS232CreatedEvent {
+    public static class SerialCreatedEvent {
         SerialId serialId;
         Set<Integer> movies;
         Set<Integer> stop;
