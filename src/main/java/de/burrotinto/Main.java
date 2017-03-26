@@ -1,5 +1,8 @@
 package de.burrotinto;
 
+import de.burrotinto.comm.SerialService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -7,7 +10,10 @@ import java.io.IOException;
 import java.util.Optional;
 
 @SpringBootApplication
-public class Main {
+public class Main implements CommandLineRunner{
+
+    @Autowired
+    SerialService serialService;
 
     public static void main(String[] args) throws Exception {
         if (args != null && args.length > 0)
@@ -22,5 +28,10 @@ public class Main {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void run(String... args) throws Exception {
+        serialService.start();
     }
 }

@@ -26,7 +26,7 @@ import static org.axonframework.commandhandling.GenericCommandMessage.asCommandM
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class SerialService implements InitializingBean {
+public class SerialService {
     private static final int MAX_MOVIE_VALUE = 63;
 
     private final CommandBus commandBus;
@@ -42,8 +42,7 @@ public class SerialService implements InitializingBean {
     private Set<Integer> pause = new HashSet<>();
     private Set<Integer> random = new HashSet<>();
 
-    @Override
-    public void afterPropertiesSet() throws Exception {
+    public void start() throws Exception {
         serials.put(facade.getSerialValue(), facade);
 
         for (int i = controllBytes.getStartRange(); i < controllBytes.getEndRange(); i++) {
@@ -89,7 +88,6 @@ public class SerialService implements InitializingBean {
             statusByte += event.isPaused() ? pow(2, statusByteConfiguration.getPlayerPausedBit()) : 0;
         }
         serials.get(event.getSerialId().getValue()).getSender().write(statusByte);
-
     }
 
     private Integer pow(int base, int ex) {
