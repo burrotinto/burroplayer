@@ -5,6 +5,8 @@ import com.pi4j.io.gpio.GpioPinDigitalOutput;
 import com.pi4j.io.gpio.PinState;
 import com.pi4j.io.gpio.RaspiPin;
 import de.burrotinto.burroPlayer.port.gpio.GPIOFacade;
+import lombok.Data;
+import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,6 +15,7 @@ import java.util.Optional;
 /**
  * Created by derduke on 27.03.17.
  */
+@Service
 public class Pi4jGPIOFacade implements GPIOFacade {
     public final static String PI4J_PIN_PREFIX = "GPIO ";
     Map<Integer, Optional<GpioPinDigitalOutput>> gpios = new HashMap<>();

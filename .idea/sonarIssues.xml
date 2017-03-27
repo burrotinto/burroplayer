@@ -198,6 +198,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/src/main/resources/banner.txt">
+          <value>
+            <set />
+          </value>
+        </entry>
       </map>
     </option>
   </component>
