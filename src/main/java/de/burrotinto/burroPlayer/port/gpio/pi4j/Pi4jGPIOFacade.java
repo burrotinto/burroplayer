@@ -47,10 +47,12 @@ public class Pi4jGPIOFacade implements GPIOFacade {
     private void initPin(int pin) {
         lock.lock();
         try {
-            gpios.putIfAbsent(pin, Optional.of(GpioFactory.getInstance().provisionDigitalOutputPin(RaspiPin
-                    .getPinByName(PI4J_PIN_PREFIX + pin), "" + pin, PinState.LOW)));
-        } catch (GpioPinExistsException e){
-            log.error("Pin already Exist:"+ pin,e);
+            if (!gpios.containsKey(pin)) {
+                gpios.put(pin, Optional.of(GpioFactory.getInstance().provisionDigitalOutputPin(RaspiPin
+                        .getPinByName(PI4J_PIN_PREFIX + pin), "" + pin, PinState.LOW)));
+            }
+        } catch (GpioPinExistsException e) {
+            log.error("Pin already Exist:" + pin, e);
         }
         lock.unlock();
     }
