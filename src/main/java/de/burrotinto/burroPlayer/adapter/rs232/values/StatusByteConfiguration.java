@@ -1,4 +1,4 @@
-package de.burrotinto.comm.values;
+package de.burrotinto.burroPlayer.adapter.rs232.values;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,6 +1,4 @@
-package de.burrotinto.comm.util;
-
-import de.burrotinto.comm.SerialValue;
+package de.burrotinto.burroPlayer.port.comm;
 
 public interface SerialFacade {
 	/**
@@ -9,7 +7,7 @@ public interface SerialFacade {
 	 * 
 	 * @return der Empfangspuffer, der Klasse Pufferspeicher<Integer>
 	 */
-	SerialByteReader getEmpfaenger();
+	public SerialByteReader getEmpfaenger();
 
 	/**
 	 * Gibt den Sendepuffer zurück. Dieser sollte nur mit 0<=x<=255 gefuettert
@@ -17,7 +15,5 @@ public interface SerialFacade {
 	 * 
 	 * @return der Sendepuffer, Klasse Pufferspeicher<Integer>
 	 */
-	SerialByteWriter getSender();
-
-	SerialValue getSerialValue();
+	public SerialByteWriter getSender();
 }

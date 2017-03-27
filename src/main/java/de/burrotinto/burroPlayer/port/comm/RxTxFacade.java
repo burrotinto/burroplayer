@@ -1,14 +1,12 @@
-package de.burrotinto.comm.util;
+package de.burrotinto.burroPlayer.port.comm;
 
 /**
  * Created by derduke on 24.03.17.
  */
 
-import de.burrotinto.comm.SerialValue;
 import gnu.io.CommPort;
 import gnu.io.CommPortIdentifier;
 import gnu.io.SerialPort;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
@@ -24,7 +22,7 @@ import java.nio.file.Path;
 @Component
 @RequiredArgsConstructor
 public class RxTxFacade implements InitializingBean, SerialFacade, SerialByteReader, SerialByteWriter {
-    @Getter
+
     private final SerialValue serialValue;
 
     private InputStream in;
