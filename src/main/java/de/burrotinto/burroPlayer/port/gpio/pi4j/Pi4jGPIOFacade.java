@@ -4,7 +4,9 @@ import com.pi4j.io.gpio.GpioFactory;
 import com.pi4j.io.gpio.GpioPinDigitalOutput;
 import com.pi4j.io.gpio.PinState;
 import com.pi4j.io.gpio.RaspiPin;
+import com.pi4j.io.gpio.exception.GpioPinExistsException;
 import de.burrotinto.burroPlayer.port.gpio.GPIOFacade;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -16,9 +18,11 @@ import java.util.concurrent.locks.ReentrantLock;
 /**
  * Created by derduke on 27.03.17.
  */
+@Slf4j
 @Service
 public class Pi4jGPIOFacade implements GPIOFacade {
     public final static String PI4J_PIN_PREFIX = "GPIO ";
+    private final Lock lock = new ReentrantLock();
 
     private Map<Integer, Optional<GpioPinDigitalOutput>> gpios = new HashMap<>();
 
@@ -40,8 +44,14 @@ public class Pi4jGPIOFacade implements GPIOFacade {
         gpios.get(gpio).ifPresent(gpioPinDigitalOutput -> gpioPinDigitalOutput.pulse(duration));
     }
 
-    private synchronized void initPin(int pin) {
-        gpios.putIfAbsent(pin, Optional.of(GpioFactory.getInstance().provisionDigitalOutputPin(RaspiPin
-                .getPinByName(PI4J_PIN_PREFIX + pin), "" + pin, PinState.LOW)));
+    private void initPin(int pin) {
+        lock.lock();
+        try {
+            gpios.putIfAbsent(pin, Optional.of(GpioFactory.getInstance().provisionDigitalOutputPin(RaspiPin
+                    .getPinByName(PI4J_PIN_PREFIX + pin), "" + pin, PinState.LOW)));
+        } catch (GpioPinExistsException e){
+            log.error("Pin already Exist:"+ pin,e);
+        }
+        lock.unlock();
     }
 }
