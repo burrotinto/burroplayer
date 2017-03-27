@@ -1,7 +1,7 @@
 package de.burrotinto.burroPlayer.adapter.file;
 
-import de.burrotinto.burroPlayer.media.helper.MovieInitialisator;
-import de.burrotinto.burroPlayer.media.remote.IndexOrganizationMediaRemoteService;
+import de.burrotinto.burroPlayer.core.media.helper.MovieInitialisator;
+import de.burrotinto.burroPlayer.core.media.remote.IndexOrganizationMediaRemoteService;
 import de.burrotinto.burroPlayer.values.BurroPlayerConfig;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -1,7 +1,7 @@
 package de.burrotinto.burroPlayer.adapter.intro;
 
-import de.burrotinto.burroPlayer.media.remote.IndexMediaRemoteService;
-import de.burrotinto.burroPlayer.media.helper.MovieInitialisator;
+import de.burrotinto.burroPlayer.core.media.remote.IndexMediaRemoteService;
+import de.burrotinto.burroPlayer.core.media.helper.MovieInitialisator;
 import de.burrotinto.burroPlayer.values.BurroPlayerConfig;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.InitializingBean;

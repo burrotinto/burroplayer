@@ -1,10 +1,8 @@
 package de.burrotinto.burroPlayer.adapter.status;
 
-import com.pi4j.io.gpio.GpioFactory;
-import com.pi4j.io.gpio.GpioPinDigitalOutput;
-import com.pi4j.io.gpio.PinState;
-import com.pi4j.io.gpio.RaspiPin;
-import de.burrotinto.burroPlayer.media.remote.IndexMediaRemoteService;
+import de.burrotinto.burroPlayer.core.media.remote.IndexMediaRemoteService;
+import de.burrotinto.burroPlayer.port.gpio.GPIOFacade;
+import de.burrotinto.burroPlayer.values.PinValue;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
@@ -22,25 +20,21 @@ public class MovieStatusAdapter implements InitializingBean, Runnable {
     private final IndexMediaRemoteService indexMediaRemoteService;
     private final PinValue pin;
 
-    private GpioPinDigitalOutput runningPin;
+    private final GPIOFacade gpioFacade;
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        try {
-            runningPin = GpioFactory.getInstance().provisionDigitalOutputPin(RaspiPin.getPinByName
-                            (PI4JStatusBlinkerAdapter.PI4J_PIN_PREFIX + pin
-                                    .getMoviestatus()),
-                    "LAEUFT", PinState.LOW);
-            new Thread(this).start();
-        } catch (UnsatisfiedLinkError e) {
-            log.error("NO RRASPI", e);
-        }
+        new Thread(this).start();
     }
 
     @Override
     public void run() {
         while (true) {
-            runningPin.setState(indexMediaRemoteService.isSomeoneRunning());
+            if(indexMediaRemoteService.isSomeoneRunning()) {
+                gpioFacade.high(pin.getMoviestatus());
+            } else {
+                gpioFacade.low(pin.getMoviestatus());
+            }
             try {
                 sleep(10);
             } catch (InterruptedException e) {

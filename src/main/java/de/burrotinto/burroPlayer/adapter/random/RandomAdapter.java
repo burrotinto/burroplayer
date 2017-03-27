@@ -1,6 +1,6 @@
 package de.burrotinto.burroPlayer.adapter.random;
 
-import de.burrotinto.burroPlayer.media.remote.IndexMediaRemoteService;
+import de.burrotinto.burroPlayer.core.media.remote.IndexMediaRemoteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

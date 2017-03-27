@@ -38,12 +38,112 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/de/burrotinto/burroPlayer/adapter/random/RandomAdapter.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/src/main/java/de/burrotinto/burroPlayer/adapter/rs232/RS232MediaRemoteAdapter.java">
           <value>
             <set />
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/src/main/java/de/burrotinto/burroPlayer/adapter/rs232/executors/StatusExecutor.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/de/burrotinto/burroPlayer/adapter/serial/RS232MediaRemoteAdapter.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/de/burrotinto/burroPlayer/adapter/serial/executors/PauseExecutor.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/de/burrotinto/burroPlayer/adapter/serial/executors/PlayerExector.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/de/burrotinto/burroPlayer/adapter/status/DiozeroStatusBlinker.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/de/burrotinto/burroPlayer/adapter/status/GPIOStatusAdapter.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/de/burrotinto/burroPlayer/adapter/status/MovieStatusAdapter.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/de/burrotinto/burroPlayer/adapter/status/PI4JStatusBlinkerAdapter.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/de/burrotinto/burroPlayer/adapter/status/PrimaryStatusAdapter.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/de/burrotinto/burroPlayer/interfaces/rs232/RS232MediaRemoteAdapter.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/de/burrotinto/burroPlayer/interfaces/rs232/executors/PauseExecutor.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/de/burrotinto/burroPlayer/interfaces/rs232/executors/PlayerExector.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/de/burrotinto/burroPlayer/interfaces/serial/RS232MediaRemoteAdapter.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/de/burrotinto/burroPlayer/interfaces/serial/executors/PauseExecutor.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/de/burrotinto/burroPlayer/interfaces/serial/executors/PlayerExector.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/de/burrotinto/burroPlayer/interfaces/web/RestController.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/de/burrotinto/burroPlayer/interfaces/web/WebController.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/de/burrotinto/burroPlayer/port/gpio/GPIOFacade.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/de/burrotinto/burroPlayer/port/gpio/GPIOService.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/de/burrotinto/burroPlayer/port/gpio/pi4j/Pi4jGPIOFacade.java">
           <value>
             <set />
           </value>
@@ -69,6 +169,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/src/main/java/de/burrotinto/burroPlayer/port/serial/SerialFacade.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/de/burrotinto/burroPlayer/values/PinValue.java">
           <value>
             <set />
           </value>
