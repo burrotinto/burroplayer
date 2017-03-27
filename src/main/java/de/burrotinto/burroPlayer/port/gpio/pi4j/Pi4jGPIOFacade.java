@@ -5,12 +5,13 @@ import com.pi4j.io.gpio.GpioPinDigitalOutput;
 import com.pi4j.io.gpio.PinState;
 import com.pi4j.io.gpio.RaspiPin;
 import de.burrotinto.burroPlayer.port.gpio.GPIOFacade;
-import lombok.Data;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * Created by derduke on 27.03.17.
@@ -18,7 +19,8 @@ import java.util.Optional;
 @Service
 public class Pi4jGPIOFacade implements GPIOFacade {
     public final static String PI4J_PIN_PREFIX = "GPIO ";
-    Map<Integer, Optional<GpioPinDigitalOutput>> gpios = new HashMap<>();
+
+    private Map<Integer, Optional<GpioPinDigitalOutput>> gpios = new HashMap<>();
 
     @Override
     public void high(int gpio) {
@@ -38,7 +40,7 @@ public class Pi4jGPIOFacade implements GPIOFacade {
         gpios.get(gpio).ifPresent(gpioPinDigitalOutput -> gpioPinDigitalOutput.pulse(duration));
     }
 
-    private void initPin(int pin) {
+    private synchronized void initPin(int pin) {
         gpios.putIfAbsent(pin, Optional.of(GpioFactory.getInstance().provisionDigitalOutputPin(RaspiPin
                 .getPinByName(PI4J_PIN_PREFIX + pin), "" + pin, PinState.LOW)));
     }
