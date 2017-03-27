@@ -1,4 +1,4 @@
-package de.burrotinto.burroPlayer.port.comm;
+package de.burrotinto.burroPlayer.port.serial;
 
 /**
  * Created by derduke on 24.03.17.

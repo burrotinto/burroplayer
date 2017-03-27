@@ -9,7 +9,7 @@ import de.burrotinto.burroPlayer.adapter.rs232.executors.StopExecutor;
 import de.burrotinto.burroPlayer.adapter.rs232.executors.WrongCodeExecutor;
 import de.burrotinto.burroPlayer.adapter.rs232.values.ControllBytes;
 import de.burrotinto.burroPlayer.adapter.status.StatusAdapter;
-import de.burrotinto.burroPlayer.port.comm.SerialByteReader;
+import de.burrotinto.burroPlayer.port.serial.SerialByteReader;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;

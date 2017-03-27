@@ -1,4 +1,4 @@
-package de.burrotinto.burroPlayer.port.comm;
+package de.burrotinto.burroPlayer.port.serial;
 
 import com.pi4j.io.serial.Serial;
 import com.pi4j.io.serial.SerialFactory;

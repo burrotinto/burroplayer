@@ -2,7 +2,7 @@ package de.burrotinto.burroPlayer.adapter.rs232.executors;
 
 import de.burrotinto.burroPlayer.adapter.rs232.values.StatusByteConfiguration;
 import de.burrotinto.burroPlayer.media.remote.IndexStatusMediaRemoteService;
-import de.burrotinto.burroPlayer.port.comm.SerialByteWriter;
+import de.burrotinto.burroPlayer.port.serial.SerialByteWriter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

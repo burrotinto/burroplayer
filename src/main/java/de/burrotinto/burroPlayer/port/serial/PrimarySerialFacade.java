@@ -1,4 +1,4 @@
-package de.burrotinto.burroPlayer.port.comm;
+package de.burrotinto.burroPlayer.port.serial;
 
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Delegate;
