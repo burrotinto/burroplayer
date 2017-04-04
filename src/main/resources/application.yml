@@ -4,20 +4,20 @@ burroplayer:
   player: auto                    # auto, omxplayer or mplayer
   minNumber: 256                  # media files with no integer prefix became an index greater than this
   adapter:
+    serial:
+      comPort: /dev/ttyAMA0
+      baud: 4800
+      controllBytes:
+        startRange: 0           # Beginning of indexes to play ( >= )
+        endRange: 10            # less than this index to play ( < )
+        stop: 128               # stops the playing
+        status: 129             # request a status byte
+        pause: 130              # paused playing
+        random: 131             # play a random movie
+      statusByte:               # the status byte bits |7|6|5|4|3|2|1|0|; bits are not set are used as movie index
+        playerRunningBit: 7
+        playerPausedBit: 6
     PI4J:
-      serial:
-        comPort: /dev/ttyAMA0
-        baud: 4800
-        controllBytes:
-          startRange: 0           # Beginning of indexes to play ( >= )
-          endRange: 10            # less than this index to play ( < )
-          stop: 128               # stops the playing
-          status: 129             # request a status byte
-          pause: 130              # paused playing
-          random: 131             # play a random movie
-        statusByte:               # the status byte bits |7|6|5|4|3|2|1|0|; bits are not set are used as movie index
-          playerRunningBit: 7
-          playerPausedBit: 6
       pins:
         happening: 5
         moviestatus: 4

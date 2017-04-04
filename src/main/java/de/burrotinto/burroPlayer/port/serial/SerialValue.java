@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 @Component
 @NoArgsConstructor
 @AllArgsConstructor
-@ConfigurationProperties(prefix = "burroplayer.adapter.PI4J.serial")
+@ConfigurationProperties(prefix = "burroplayer.adapter.serial")
 public class SerialValue {
     private String comPort;
     private int baud;
