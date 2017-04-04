@@ -6,6 +6,7 @@ import com.pi4j.io.gpio.PinState;
 import com.pi4j.io.gpio.RaspiPin;
 import com.pi4j.io.gpio.exception.GpioPinExistsException;
 import de.burrotinto.burroPlayer.port.gpio.GPIOFacade;
+import de.burrotinto.burroPlayer.port.helper.LinuxApp;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 

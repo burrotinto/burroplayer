@@ -1,8 +1,6 @@
 package de.burrotinto.burroPlayer.port.gpio;
 
 
-import com.diozero.util.BoardInfo;
-import com.diozero.util.SystemInfo;
 import de.burrotinto.burroPlayer.port.gpio.pi4j.Pi4jGPIOFacade;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Delegate;
@@ -28,8 +26,7 @@ public class GPIOService implements GPIOFacade, InitializingBean {
     @Override
     public void afterPropertiesSet() throws Exception {
         try {
-            BoardInfo boardInfo = SystemInfo.getBoardInfo();
-            log.info("{}", boardInfo);
+            facade = pi4jGPIOFacade;
         } catch (Exception e) {
             facade = logFacade;
         }

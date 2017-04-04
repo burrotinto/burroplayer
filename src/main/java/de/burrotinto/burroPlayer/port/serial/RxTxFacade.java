@@ -4,6 +4,7 @@ package de.burrotinto.burroPlayer.port.serial;
  * Created by derduke on 24.03.17.
  */
 
+import de.burrotinto.burroPlayer.port.helper.LinuxApp;
 import gnu.io.CommPort;
 import gnu.io.CommPortIdentifier;
 import gnu.io.SerialPort;
@@ -21,7 +22,7 @@ import java.nio.file.Path;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class RxTxFacade implements InitializingBean, SerialFacade, SerialByteReader, SerialByteWriter {
+public class RxTxFacade implements InitializingBean, SerialFacade, SerialByteReader, SerialByteWriter, LinuxApp {
 
     private final SerialValue serialValue;
 
@@ -104,5 +105,10 @@ public class RxTxFacade implements InitializingBean, SerialFacade, SerialByteRea
         } catch (IOException e) {
             log.error("Write error:", e);
         }
+    }
+
+    @Override
+    public String getName() {
+        return "java-rxtx";
     }
 }

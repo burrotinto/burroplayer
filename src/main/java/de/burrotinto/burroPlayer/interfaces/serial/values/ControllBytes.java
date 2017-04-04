@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 @Component
 @NoArgsConstructor
 @AllArgsConstructor
-@ConfigurationProperties(prefix="burroplayer.adapter.PI4J.serial.controllBytes")
+@ConfigurationProperties(prefix="burroplayer.adapter.serial.controllBytes")
 public class ControllBytes {
     private int startRange;
     private int endRange;
