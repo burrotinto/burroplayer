@@ -3,6 +3,7 @@ package de.burrotinto.burroPlayer.core.media.remote;
 import de.burrotinto.burroPlayer.core.media.player.Player;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -26,17 +27,19 @@ public class PlayerIndexMediaRemoteService implements IndexMediaRemoteService {
     private Integer lastPlayed;
     private boolean isPaused;
 
-    public void play(int number) {
+    public boolean play(int number) {
         if (hasPlayerAt(number)) {
             if (player.play(map.get(number))) {
                 lastPlayed = number;
                 isPaused = false;
+                return true;
             }
         }
+        return false;
     }
 
     @Override
-    public boolean play(String fileName) {
+    public boolean play(@NotNull String fileName) {
         return player.play(fileName);
     }
 
@@ -58,28 +61,30 @@ public class PlayerIndexMediaRemoteService implements IndexMediaRemoteService {
     }
 
     @Override
-    public void addMovie(int pos, String path) {
+    public void addMovie(int pos, @NotNull String path) {
         map.put(pos, path);
     }
 
+    @NotNull
     @Override
     public List<Integer> getIndexList() {
         return Collections.unmodifiableList(new ArrayList<>(map.keySet()));
     }
 
+    @NotNull
     @Override
-    public Optional<String> getPathOfIndex(Integer index) {
+    public Optional<String> getPathOfIndex(int index) {
         return Optional.ofNullable(map.get(index));
     }
 
     @Override
-    public boolean hasPlayerAt(Integer introKey) {
-        return map.containsKey(introKey);
+    public boolean hasPlayerAt(int key) {
+        return map.containsKey(key);
     }
 
-
+    @NotNull
     @Override
-    public Optional<Integer> getIndexForFile(String file) {
+    public Optional<Integer> getIndexForFile(@NotNull String file) {
         for (Map.Entry<Integer, String> entry : map.entrySet()) {
             if (entry.getValue().equals(file)) {
                 return Optional.of(entry.getKey());
@@ -93,6 +98,7 @@ public class PlayerIndexMediaRemoteService implements IndexMediaRemoteService {
         map.remove(pos);
     }
 
+    @NotNull
     @Override
     public Optional<Integer> getPlayingIndex() {
         if (isSomeoneRunning()) {
@@ -106,6 +112,7 @@ public class PlayerIndexMediaRemoteService implements IndexMediaRemoteService {
     public boolean isPaused() {
         return isSomeoneRunning() && isPaused;
     }
+
 }
 
 

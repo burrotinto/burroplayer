@@ -1,6 +1,5 @@
 package de.burrotinto.burroPlayer.interfaces.serial.executors;
 
-import de.burrotinto.burroPlayer.core.media.remote.IndexMediaRemoteService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -11,12 +10,9 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class StopExecutor  implements Executor {
-    private final IndexMediaRemoteService indexMediaRemoteService;
-
+public class MVCWrongCodeExecutor implements WrongCodeExecutor {
     @Override
     public void execute(int command) {
-        log.info("Stoppbefehl");
-        indexMediaRemoteService.stopAll();
+        log.warn("CANNOT UNDERSTAND: " + command);
     }
 }

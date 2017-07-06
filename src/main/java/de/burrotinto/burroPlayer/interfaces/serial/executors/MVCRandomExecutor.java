@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @RequiredArgsConstructor
-public class RandomExecutor implements Executor {
+public class MVCRandomExecutor implements RandomExecutor {
 
     private final RandomAdapter randomAdapter;
 

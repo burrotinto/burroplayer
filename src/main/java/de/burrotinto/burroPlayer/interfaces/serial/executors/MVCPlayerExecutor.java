@@ -8,15 +8,15 @@ import org.springframework.stereotype.Service;
 /**
  * Created by derduke on 16.02.17.
  */
-@Slf4j
 @Service
+@Slf4j
 @RequiredArgsConstructor
-public class PauseExecutor implements Executor {
+public class MVCPlayerExecutor implements PlayerExecutor {
     private final IndexMediaRemoteService indexMediaRemoteService;
 
     @Override
     public void execute(int command) {
-        log.info("Pause");
-        indexMediaRemoteService.pause();
+        log.info("Videostartbefehl: " + command);
+        indexMediaRemoteService.play(command);
     }
 }

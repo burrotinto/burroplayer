@@ -3,6 +3,7 @@ package de.burrotinto.burroPlayer.interfaces.rest;
 import de.burrotinto.burroPlayer.adapter.file.FileChecker;
 import de.burrotinto.burroPlayer.core.media.remote.IndexMediaRemoteService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -12,6 +13,7 @@ import java.util.Optional;
 /**
  * Created by derduke on 27.02.17.
  */
+@Service
 @RequiredArgsConstructor
 @org.springframework.web.bind.annotation.RestController
 public class RestController {

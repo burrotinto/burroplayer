@@ -16,7 +16,7 @@ import java.util.Optional;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class StatusExecutor implements Executor {
+public class MVCStatusExecutor implements StatusExecutor {
     private static final int MAX_MOVIE_VALUE = 63;
     private final SerialByteWriter sender;
     private final IndexStatusMediaRemoteService indexStatusMediaRemoteService;

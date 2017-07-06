@@ -2,7 +2,7 @@ package de.burrotinto.burroPlayer.interfaces.serial;
 
 import de.burrotinto.burroPlayer.interfaces.serial.executors.Executor;
 import de.burrotinto.burroPlayer.interfaces.serial.executors.PauseExecutor;
-import de.burrotinto.burroPlayer.interfaces.serial.executors.PlayerExector;
+import de.burrotinto.burroPlayer.interfaces.serial.executors.PlayerExecutor;
 import de.burrotinto.burroPlayer.interfaces.serial.executors.RandomExecutor;
 import de.burrotinto.burroPlayer.interfaces.serial.executors.StatusExecutor;
 import de.burrotinto.burroPlayer.interfaces.serial.executors.StopExecutor;
@@ -26,7 +26,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class RS232MediaRemoteAdapter implements InitializingBean, Runnable {
     private final PauseExecutor pauseExecutor;
-    private final PlayerExector playerExector;
+    private final PlayerExecutor playerExector;
     private final StatusExecutor statusExecutor;
     private final StopExecutor stopExecutor;
     private final RandomExecutor randomExecutor;
@@ -51,7 +51,6 @@ public class RS232MediaRemoteAdapter implements InitializingBean, Runnable {
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        new Thread(this).start();
         for (int i = controllBytes.getStartRange(); i < controllBytes.getEndRange(); i++) {
             executes.put(i,playerExector);
         }
@@ -59,6 +58,8 @@ public class RS232MediaRemoteAdapter implements InitializingBean, Runnable {
         executes.put(controllBytes.getPause(),pauseExecutor);
         executes.put(controllBytes.getStop(),stopExecutor);
         executes.put(controllBytes.getStatus(),statusExecutor);
+
+        new Thread(this).start();
     }
 
     @Override
