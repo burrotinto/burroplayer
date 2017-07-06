@@ -12,6 +12,6 @@ import org.springframework.stereotype.Service
 @Service
 class EventPlayerExecutor(val eventPublisher: ApplicationEventPublisher):PlayerExecutor {
     override fun execute(command: Int) {
-        eventPublisher.publishEvent(StartIndexMovieEvent(this,command))
+        eventPublisher.publishEvent(StartIndexMovieEvent(this, command))
     }
 }
