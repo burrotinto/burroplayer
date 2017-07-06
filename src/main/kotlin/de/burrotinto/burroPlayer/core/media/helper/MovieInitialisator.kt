@@ -29,9 +29,9 @@ class MovieInitialisator(val config: BurroPlayerConfig, val analyser: MovieAnaly
         }.forEach {
             //                log.info("       is Movie File: " + p.toFile().absolutePath)
 
-            val path = renameFriendly(it)
+            val newPath = renameFriendly(it)
 
-            var number = computateNumber(path)
+            var number = computateNumber(newPath)
 
             if (remote.hasPlayerAt(number)) {
                 number = config.minNumber
@@ -41,7 +41,7 @@ class MovieInitialisator(val config: BurroPlayerConfig, val analyser: MovieAnaly
             }
 //                log.info("            {} on pos {} hinzufügen", p.toFile().absolutePath, number)
 
-            remote.addMovie(number, path.toFile().absolutePath)
+            remote.addMovie(number, newPath.toFile().absolutePath)
         }
     }
 

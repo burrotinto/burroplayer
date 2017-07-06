@@ -9,6 +9,5 @@ import org.springframework.stereotype.Component
 
 @Component
 @ConfigurationProperties(prefix = "burroplayer")
-data class BurroPlayerConfig(var path: String, var loopPrefix: String, var player: String, var minNumber: Int) {
-    constructor() : this("", "", "", -1)
-}
+data class BurroPlayerConfig(var path: String = "", var loopPrefix: String = "", var player: String = "", var minNumber:
+Int = 0)
