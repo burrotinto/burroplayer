@@ -8,4 +8,4 @@ import org.springframework.stereotype.Component
  */
 @Component
 @ConfigurationProperties(prefix = "burroplayer.adapter.PI4J.pins")
-class PinValue(var happening: Int = 0, var moviestatus: Int = 0)
+data class PinValue(var happening: Int = 0, var moviestatus: Int = 0)
