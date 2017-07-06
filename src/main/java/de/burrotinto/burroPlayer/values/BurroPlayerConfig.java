@@ -1,24 +1,24 @@
-package de.burrotinto.burroPlayer.values;
-
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
-
-/**
- * Created by derduke on 16.02.17.
- */
-@Setter
-@Getter
-@Component
-@NoArgsConstructor
-@AllArgsConstructor
-@ConfigurationProperties(prefix = "burroplayer")
-public class BurroPlayerConfig {
-    private String path;
-    private String loopPrefix;
-    private String player;
-    private Integer minNumber;
-}
+//package de.burrotinto.burroPlayer.values;
+//
+//import lombok.AllArgsConstructor;
+//import lombok.Getter;
+//import lombok.NoArgsConstructor;
+//import lombok.Setter;
+//import org.springframework.boot.context.properties.ConfigurationProperties;
+//import org.springframework.stereotype.Component;
+//
+///**
+// * Created by derduke on 16.02.17.
+// */
+//@Setter
+//@Getter
+//@Component
+//@NoArgsConstructor
+//@AllArgsConstructor@ConfigurationProperties(prefix = "burroplayer")
+//
+//public class BurroPlayerConfig {
+//    private String path;
+//    private String loopPrefix;
+//    private String player;
+//    private Integer minNumber;
+//}
