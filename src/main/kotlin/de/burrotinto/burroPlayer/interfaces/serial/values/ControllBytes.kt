@@ -8,4 +8,4 @@ import org.springframework.stereotype.Component
  */
 @Component
 @ConfigurationProperties(prefix = "burroplayer.adapter.serial.controllBytes")
-class ControllBytes(val startRange: Int = 0, val endRange: Int = 0, val stop: Int = 0, val pause: Int = 0, val status: Int = 0, val random: Int = 0)
+data class ControllBytes(var startRange: Int = 0, var endRange: Int = 10, var stop: Int = 128, val pause: Int = 130, val status: Int = 129, val random: Int = 131)
