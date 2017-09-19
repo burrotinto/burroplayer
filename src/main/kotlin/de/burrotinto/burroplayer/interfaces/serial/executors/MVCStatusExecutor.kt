@@ -10,8 +10,9 @@ import org.springframework.stereotype.Service
  * Created by derduke on 16.02.17.
  */
 @Service
-class MVCStatusExecutor(private val sender: SerialByteWriter, private val indexStatusMediaRemoteService:
-IndexStatusMediaRemoteService, private val statusByteConfiguration: StatusByteConfiguration) : StatusExecutor {
+class MVCStatusExecutor(private val sender: SerialByteWriter,
+                        private val indexStatusMediaRemoteService: IndexStatusMediaRemoteService,
+                        private val statusByteConfiguration: StatusByteConfiguration) : StatusExecutor {
 
     override fun execute(command: Int) {
 
@@ -21,7 +22,7 @@ IndexStatusMediaRemoteService, private val statusByteConfiguration: StatusByteCo
     }
 
 
-    val statusByte: Int
+    private val statusByte: Int
         get() {
             var statusByte = 0
 
@@ -37,7 +38,7 @@ IndexStatusMediaRemoteService, private val statusByteConfiguration: StatusByteCo
 
     private fun pow(base: Int, ex: Int): Int? {
         var r = 1
-        for (i in 0..ex - 1) {
+        for (i in 0 until ex) {
             r *= base
         }
         return r
