@@ -27,7 +27,7 @@ burroplayer:
 
 omxplayer:
   exe: /usr/bin/omxplayer
-  options: -o both
+  options: -o both --no-keys
   pause: p
 
 

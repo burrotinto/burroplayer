@@ -68,16 +68,17 @@ public class PlayerSelector implements Player, InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        switch (playerConfig.getPlayer()) {
-            case ("omxplayer"):
-                selected = omxPlayer;
-                break;
-            case ("mplayer"):
-                selected = mplayer;
-                break;
-            default:
-                selected = appExist(omxPlayer) ? omxPlayer : mplayer;
-        }
-        log.info(selected.applicationExecuteString() + " selected");
+//        switch (playerConfig.getPlayer()) {
+//            case ("omxplayer"):
+//                selected = omxPlayer;
+//                break;
+//            case ("mplayer"):
+//                selected = mplayer;
+//                break;
+//            default:
+//                selected = appExist(omxPlayer) ? omxPlayer : mplayer;
+//        }
+//        log.info(selected.applicationExecuteString() + " selected");
+        selected = omxPlayer;
     }
 }

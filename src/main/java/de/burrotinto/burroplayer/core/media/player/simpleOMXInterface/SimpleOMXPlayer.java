@@ -33,7 +33,7 @@ public class SimpleOMXPlayer implements Player, InitializingBean {
     private Process process = null;
     private BufferedWriter bufferedWriter = null;
     private String omx;
-    private Optional<Killer> aktualKiller;
+//    private Optional<Killer> aktualKiller;
 
     @Override
     public boolean play(String movie) {
@@ -58,8 +58,8 @@ public class SimpleOMXPlayer implements Player, InitializingBean {
 
                 log.info("Movie duration: " + movieAnalysatorMap.get(movie));
 
-                aktualKiller = Optional.ofNullable(new Killer(process, movieAnalysatorMap.get(movie) - 100));
-                aktualKiller.ifPresent(killer -> new Thread(killer).start());
+//                aktualKiller = Optional.ofNullable(new Killer(process, movieAnalysatorMap.get(movie) - 100));
+//                aktualKiller.ifPresent(killer -> new Thread(killer).start());
 
             } catch (IOException e) {
                 lock.unlock();
@@ -85,7 +85,7 @@ public class SimpleOMXPlayer implements Player, InitializingBean {
         }
         process = null;
         bufferedWriter = null;
-        aktualKiller = Optional.empty();
+//        aktualKiller = Optional.empty();
     }
 
     @Override
@@ -106,7 +106,7 @@ public class SimpleOMXPlayer implements Player, InitializingBean {
             try {
                 log.info("pause");
                 bufferedWriter.write(config.getPause());
-                aktualKiller.ifPresent(killer -> killer.paused());
+//                aktualKiller.ifPresent(killer -> killer.paused());
                 bufferedWriter.flush();
             } catch (Exception e) {
                 log.error("Exception while pause", e);
