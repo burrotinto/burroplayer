@@ -31,7 +31,7 @@ omxplayer:
   pause: p
 
 application:
-  version: 1.3.1-Snapshot
+  version: 1.3.1
 logging:
 #    file: /var/burrotinto/burro.log
     level:
