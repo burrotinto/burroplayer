@@ -75,10 +75,10 @@ public class SimpleOMXPlayer implements Player, InitializingBean {
     private void stopWithoutLock() {
         try {
             log.info("kill start");
-            Runtime.getRuntime().exec("killall omxplayer.bin");
+            Runtime.getRuntime().exec("killall omxplayer");
             while (process != null && process.isAlive()) {
                 Thread.sleep(2);
-                Runtime.getRuntime().exec("killall omxplayer.bin");
+                Runtime.getRuntime().exec("killall omxplayer");
             }
             log.info("kill ende");
         } catch (Exception e) {
