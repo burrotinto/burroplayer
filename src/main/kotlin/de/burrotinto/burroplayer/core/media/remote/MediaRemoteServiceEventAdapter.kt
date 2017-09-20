@@ -17,7 +17,6 @@ service: KotlinPlayerIndexMediaRemoteService) : IndexMediaRemoteService {
 
 
     override fun isSomeoneRunning(): Boolean {
-        Log.info("isSomeoneRunning()")
         return service.isSomeoneRunning()
     }
 

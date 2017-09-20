@@ -26,10 +26,11 @@ open class RunnableLoopAdapter(
         if (indexMediaRemoteService.hasPlayerAt(INTROKEY)) {
             indexMediaRemoteService.play(INTROKEY)
             while (true) {
-                Thread.sleep(10)
+                Thread.sleep(25)
                 if (!indexMediaRemoteService.isSomeoneRunning()) {
                     Log.info("start Loop")
                     indexMediaRemoteService.play(INTROKEY)
+                    Thread.sleep(1000)
                 }
             }
         }
