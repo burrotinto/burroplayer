@@ -30,7 +30,8 @@ omxplayer:
   options: -o both --no-keys
   pause: p
 
-
+application:
+  version: 1.3.1-Snapshot
 logging:
 #    file: /var/burrotinto/burro.log
     level:

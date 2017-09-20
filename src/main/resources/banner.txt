@@ -27,7 +27,7 @@
                           / ____/ / /_/ / /_/ /  __/ /
                          /_/   /_/\__,_/\__, /\___/_/
                                        /____/
-                                                 1.3.0-SNAPSHOT
+                                                 ${application.version}-SNAPSHOT
 
 
 
