@@ -5,6 +5,7 @@ import de.burrotinto.burroplayer.adapter.status.StatusAdapter
 import de.burrotinto.burroplayer.interfaces.serial.executors.*
 import de.burrotinto.burroplayer.interfaces.serial.values.ControllBytes
 import de.burrotinto.burroplayer.port.serial.SerialByteReader
+import de.jupf.staticlog.Log
 import lombok.extern.slf4j.Slf4j
 import org.springframework.stereotype.Component
 import java.util.*
@@ -42,6 +43,8 @@ class RS232MediaRemoteAdapter(private val wrongCodeExecutor: WrongCodeExecutor,
     fun getNextBefehl() {
         val code = empfaenger.read()
         statusAdapter.somethingHappens()
+
+        Log.info(code.toString())
 
         executes[code]?.execute(code) ?: wrongCodeExecutor.execute(code)
     }

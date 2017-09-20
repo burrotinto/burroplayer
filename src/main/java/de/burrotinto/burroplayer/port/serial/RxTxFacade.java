@@ -7,10 +7,11 @@ package de.burrotinto.burroplayer.port.serial;
 import de.burrotinto.burroplayer.port.helper.LinuxApp;
 import gnu.io.CommPort;
 import gnu.io.CommPortIdentifier;
+import gnu.io.NoSuchPortException;
+import gnu.io.PortInUseException;
 import gnu.io.SerialPort;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
@@ -22,38 +23,42 @@ import java.nio.file.Path;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class RxTxFacade implements InitializingBean, SerialFacade, SerialByteReader, SerialByteWriter, LinuxApp {
+public class RxTxFacade implements SerialFacade, SerialByteReader, SerialByteWriter, LinuxApp {
 
     private final SerialValue serialValue;
+    private boolean isConnected = false;
 
     private InputStream in;
     private OutputStream out;
 
-    private void connect() throws Exception {
-        String port = symLink(serialValue.getComPort());
+    public void connect() throws Exception {
+        if (!isConnected) {
+            String port = symLink(serialValue.getComPort());
 
-        CommPortIdentifier portIdentifier = CommPortIdentifier
-                .getPortIdentifier(port);
-        if (portIdentifier.isCurrentlyOwned()) {
-            log.error("Error: Port:{} is currently in use", serialValue.getComPort());
-        } else {
-            int timeout = 2000;
-            CommPort commPort = portIdentifier.open(this.getClass().getName(), timeout);
-
-            if (commPort instanceof SerialPort) {
-                SerialPort serialPort = (SerialPort) commPort;
-                serialPort.setSerialPortParams(serialValue.getBaud(),
-                        SerialPort.DATABITS_8,
-                        SerialPort.STOPBITS_1,
-                        SerialPort.PARITY_NONE);
-
-                in = serialPort.getInputStream();
-                out = serialPort.getOutputStream();
-
-
+            CommPortIdentifier portIdentifier = CommPortIdentifier
+                    .getPortIdentifier(port);
+            if (portIdentifier.isCurrentlyOwned()) {
+                log.error("Error: Port:{} is currently in use", serialValue.getComPort());
             } else {
-                log.error("Error: Port:{} is not a serial Port", serialValue.getComPort());
+                int timeout = 2000;
+                CommPort commPort = portIdentifier.open(this.getClass().getName(), timeout);
+
+                if (commPort instanceof SerialPort) {
+                    SerialPort serialPort = (SerialPort) commPort;
+                    serialPort.setSerialPortParams(serialValue.getBaud(),
+                            SerialPort.DATABITS_8,
+                            SerialPort.STOPBITS_1,
+                            SerialPort.PARITY_NONE);
+
+                    in = serialPort.getInputStream();
+                    out = serialPort.getOutputStream();
+
+
+                } else {
+                    log.error("Error: Port:{} is not a serial Port", serialValue.getComPort());
+                }
             }
+            isConnected = true;
         }
     }
 
@@ -66,16 +71,11 @@ public class RxTxFacade implements InitializingBean, SerialFacade, SerialByteRea
         }
 //        Files.createSymbolicLink(org, symLink.toPath());
 
-        Runtime.getRuntime().exec("ln -s "+path + " " + symLink.getAbsolutePath());
+        Runtime.getRuntime().exec("ln -s " + path + " " + symLink.getAbsolutePath());
 
         log.info("{} now map as {}", path, symLink.getAbsolutePath());
         return symLink.getAbsolutePath();
 
-    }
-
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        connect();
     }
 
     @Override

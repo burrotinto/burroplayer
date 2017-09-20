@@ -78,13 +78,10 @@ class MovieInitialisator(val config: BurroPlayerConfig, val analyser: MovieAnaly
 
     @Throws(IOException::class)
     fun setPrefixMovieOnPos(path: String, remote: IndexMediaRemoteService, prefix: String, pos: Int) {
-        Files.newDirectoryStream(File(path).toPath()).forEach {
-            if ((Files.probeContentType(it).contains("video") || Files.probeContentType(it).contains("audio")) && it
-                    .toFile().name.toLowerCase().startsWith(prefix)) {
-
-//                log.info("Prefix: " + prefix + " " + p.toFile().absolutePath + " on pos " + pos + " hinzufügen")
-
+        Files.walk(File(path).toPath()).forEach {
+            if (it.toFile().name.toLowerCase().startsWith(prefix)) {
                 remote.addMovie(pos, it.toFile().absolutePath)
+                return@forEach
             }
         }
     }

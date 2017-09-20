@@ -1,5 +1,6 @@
 package de.burrotinto.burroplayer.core.media.remote
 
+import de.jupf.staticlog.Log
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Primary
@@ -15,9 +16,13 @@ open class MediaRemoteServiceEventAdapter(val eventPublisher: ApplicationEventPu
 service: KotlinPlayerIndexMediaRemoteService) : IndexMediaRemoteService {
 
 
-    override fun isSomeoneRunning(): Boolean = service.isSomeoneRunning()
+    override fun isSomeoneRunning(): Boolean {
+        Log.info("isSomeoneRunning()")
+        return service.isSomeoneRunning()
+    }
 
     override fun pause() {
+        Log.info("pause()")
         service.pause()
         if (isPaused()) {
             eventPublisher.publishEvent(MovieUnpausedEvent(service))
@@ -27,32 +32,38 @@ service: KotlinPlayerIndexMediaRemoteService) : IndexMediaRemoteService {
     }
 
     override fun play(pos: Int): Boolean {
-        if (service.play(pos)) {
+        Log.info("play($pos)")
+        return if (service.play(pos)) {
             eventPublisher.publishEvent(MovieIndexStartEvent(service, pos))
-            return true
+            true
         } else {
             eventPublisher.publishEvent(MovieIndexStartFailedEvent(service, pos))
-            return false
+            false
         }
     }
 
     override fun play(fileName: String): Boolean {
-        if (service.play(fileName)) {
+        Log.info("play($fileName)")
+        return if (service.play(fileName)) {
             eventPublisher.publishEvent(MovieStringStartEvent(service, fileName))
-            return true
+            true
         } else {
             eventPublisher.publishEvent(MovieStringStartFailedEvent(service, fileName))
-            return false
+            false
         }
     }
 
     override fun stopAll() {
+        Log.info("stopAll()")
         service.stopAll()
         //TODO
         eventPublisher.publishEvent(MovieStoppedEvent(service))
     }
 
-    override fun isPaused(): Boolean = service.isPaused()
+    override fun isPaused(): Boolean {
+        Log.info("isPaused()")
+        return service.isPaused()
+    }
 
     override fun getPlayingIndex(): Optional<Int> = service.getPlayingIndex()
 

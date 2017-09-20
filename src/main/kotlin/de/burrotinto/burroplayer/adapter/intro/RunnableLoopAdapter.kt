@@ -4,6 +4,7 @@ import de.burrotinto.burroplayer.adapter.RunnableAdapter
 import de.burrotinto.burroplayer.core.media.helper.MovieInitialisator
 import de.burrotinto.burroplayer.core.media.remote.IndexMediaRemoteService
 import de.burrotinto.burroplayer.values.BurroPlayerConfig
+import de.jupf.staticlog.Log
 import lombok.RequiredArgsConstructor
 import org.springframework.beans.factory.InitializingBean
 import org.springframework.stereotype.Component
@@ -27,6 +28,7 @@ open class RunnableLoopAdapter(
             while (true) {
                 Thread.sleep(10)
                 if (!indexMediaRemoteService.isSomeoneRunning()) {
+                    Log.info("start Loop")
                     indexMediaRemoteService.play(INTROKEY)
                 }
             }
