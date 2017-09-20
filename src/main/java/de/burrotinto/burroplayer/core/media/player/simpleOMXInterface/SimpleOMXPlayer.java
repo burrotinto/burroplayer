@@ -38,6 +38,7 @@ public class SimpleOMXPlayer implements Player, InitializingBean {
     @Override
     public boolean play(String movie) {
         if (!lock.tryLock()) {
+            log.info("is locked");
             return false;
         } else {
             stopWithoutLock();

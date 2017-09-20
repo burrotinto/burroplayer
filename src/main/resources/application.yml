@@ -34,7 +34,7 @@ application:
   version: 1.3.1
 logging:
 #    file: /var/burrotinto/burro.log
-    level:
-        org.springframework: 'ERROR'
-        de.burrotinto: 'WARN'
-        com.pi4j: 'OFF'
+  #  level:
+   #     org.springframework: 'ERROR'
+    #    de.burrotinto: 'WARN'
+     #   com.pi4j: 'OFF'

@@ -32,10 +32,10 @@ open class KotlinPlayerIndexMediaRemoteService(val player: Player) : IndexMediaR
 
     override fun play(pos: Int):Boolean {
         val file = movieMap[pos]
-        if (file != null) {
-            return startMovie(file)
+        return if (file != null) {
+            startMovie(file)
         } else {
-            return false
+            false
         }
     }
 
